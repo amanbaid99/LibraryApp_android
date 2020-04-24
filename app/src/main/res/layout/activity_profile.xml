@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".User.Profile"
+    android:id="@+id/drawerlay"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello User"
+        android:textSize="36dp"
+        android:layout_marginTop="40dp"
+        android:textStyle="italic"
+        android:textColor="#5C3FDD"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/greetings"
+        >
+    </TextView>
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="105dp"
+        android:visibility="visible"
+        >
+    </androidx.legacy.widget.Space>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings"
+        android:text="Settings"
+        android:background="@drawable/button_circular"
+        android:layout_marginTop="118dp"
+        android:layout_centerHorizontal="true"
+        ></Button>
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="175dp"
+        android:visibility="visible"
+        >
+    </androidx.legacy.widget.Space>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/books_read_displayer"
+        android:layout_marginTop="250dp"
+        android:padding="6dp"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="465dp"
+        android:visibility="visible"
+        >
+    </androidx.legacy.widget.Space>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Books Read"
+        android:textSize="28dp"
+        android:layout_marginTop="480dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/books_read_count"
+        android:textColor="#1DBA23"
+        >
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Books Being Read"
+        android:textSize="28dp"
+        android:layout_marginTop="530dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/books_reading_count"
+        android:textColor="#D3C01D"
+        >
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Books To Read"
+        android:textSize="28dp"
+        android:layout_marginTop="580dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/books_toread_count"
+        android:textColor="#0D4B7C"
+        >
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:textSize="18dp"
+        android:layout_marginTop="700dp"
+
+        android:layout_centerHorizontal="true"
+        android:id="@+id/delete_account"
+        android:textColor="#0A0A0B"
+        >
+    </TextView>
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:menu="@menu/drawer_menu"
+        android:layout_gravity="start"/>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

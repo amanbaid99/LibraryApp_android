@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<group>
+
+        <item
+            android:id="@+id/home"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/home"
+            android:title="Home"
+
+            />
+
+        <item
+            android:id="@+id/browse"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/category"
+            android:title="Browse"
+            />
+        <item
+            android:id="@+id/search"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/search"
+            android:title="SearchBooks"
+            />
+
+        <item
+            android:id="@+id/addbkbtn"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/search"
+            android:title="Add Books"
+            />
+
+</group>
+
+        <item
+            android:id="@+id/Profile"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/admin"
+            android:title="Profile"
+            />
+
+
+        <item
+            android:id="@+id/Logoutbtn"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+
+
+
+</menu>

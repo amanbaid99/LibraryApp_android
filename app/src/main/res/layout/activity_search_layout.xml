@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/Bookimg"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:padding="2dp"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/BookName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bookname"
+            android:textColor="#212121"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/AuthorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Authorname" />
+
+
+        <TextView
+            android:id="@+id/Publications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Publisher" />
+
+
+        <TextView
+            android:id="@+id/Shelfno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shelfno" />
+
+
+    </LinearLayout>
+</LinearLayout>
