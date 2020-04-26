@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -71,6 +72,14 @@ public class Signup extends AppCompatActivity {
         userdb=new UserDB();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        {
+            emailid.setText("email.com");
+
+            Fullname.setText("email");
+
+            password.setText("email.com");
+
+            }
         chooseimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +121,7 @@ public class Signup extends AppCompatActivity {
         final String EmailID=emailid.getText().toString().trim();
         String Password=password.getText().toString().trim();
         String fname=Fullname.getText().toString().trim();
-        String number=phone.getText().toString().trim();
+        final String number=phone.getText().toString().trim();
 
 
 
@@ -144,11 +153,16 @@ public class Signup extends AppCompatActivity {
 
 
                 if(task.isSuccessful()){
+//                    uploadImage();
+
                     userdb.setFullName(Fullname.getText().toString().trim());
                     userdb.setNumber(phone.getText().toString().trim());
                     userdb.setEmail(emailid.getText().toString().trim());
                     userdb.setUid(fAuth.getUid());
-                    databaseReference.push().setValue(userdb);
+
+                    String uid=fAuth.getUid();
+                    databaseReference.child(uid).setValue(userdb);
+
 
                     Toast.makeText(Signup.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),Login.class));
@@ -157,7 +171,7 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(Signup.this, "Error Signing Up" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
-                uploadImage();
+
             }
         });
 

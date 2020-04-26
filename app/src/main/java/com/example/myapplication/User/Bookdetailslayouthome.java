@@ -92,7 +92,7 @@ public class Bookdetailslayouthome extends SearchPage {
         //retriving onclick data from homepage
 
         {
-                String key = getIntent().getStringExtra("key");
+                String key = getIntent().getStringExtra("Ukey");
                if(key!=null) {
                    databaseReference.child(key).addValueEventListener(new ValueEventListener() {
                        @Override

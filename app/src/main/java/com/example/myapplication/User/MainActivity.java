@@ -2,12 +2,14 @@ package com.example.myapplication.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -29,8 +31,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -51,6 +56,8 @@ public class MainActivity extends Login  {
     private FirebaseAnalytics mFirebaseAnalytics;
     FirebaseAuth fAuth;
     ImageView profile;
+    TextView Uname,Email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class MainActivity extends Login  {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         profile=(ImageView) findViewById(R.id.profileimg);
         reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reff=FirebaseDatabase.getInstance().getReference().child("UserDB");
         reference.keepSynced(true);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
@@ -76,34 +84,33 @@ public class MainActivity extends Login  {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         fAuth= FirebaseAuth.getInstance();
+        Uname=(TextView) findViewById(R.id.unamedisplay);
+        Email=(TextView) findViewById(R.id.emaildisplay);
 
 
 
-        useroptions=new FirebaseRecyclerOptions.Builder<UserDB>()
-                .setQuery(reference.child("UserDB"),UserDB.class).build();
-        useradapter=new FirebaseRecyclerAdapter<UserDB, Bkhomeholder>(useroptions) {
-            @Override
-            protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull UserDB model) {
-//                Picasso.get().load()
-//                Picasso.get().load(model.getProfilrimg()).into(holder.profilepic, new Callback() {
-//                @Override
-//                public void onSuccess() {
-//
-//                }
-//
-//                @Override
-//                public void onError(Exception e) {
-//
-//                }
-//            });
-        }
 
-            @NonNull
-            @Override
-            public Bkhomeholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
-            }
-        };
+        String UserKey = getIntent().getStringExtra("Ukey");
+        Toast.makeText(getApplicationContext(),"hellloo"+userkey,Toast.LENGTH_LONG).show();
+               if(userkey!=null) {
+
+                   reff.child(userkey).addListenerForSingleValueEvent(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           String mname = dataSnapshot.child("fullName").getValue().toString();
+                           Uname.setText("hellooooo");
+                           String Memail = dataSnapshot.child("email").getValue().toString();
+                           Email.setText(Memail);
+//                        Picasso.get().load()
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                       }
+                   });
+               }
+
 
 
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()

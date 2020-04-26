@@ -48,7 +48,7 @@
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="65dp"
         app:headerLayout="@layout/header"
         android:id="@+id/drawer"
         android:layout_width="match_parent"

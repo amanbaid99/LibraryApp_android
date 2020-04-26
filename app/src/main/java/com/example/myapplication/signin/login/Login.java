@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Admin.AdminHome;
+import com.example.myapplication.User.Bookdetailslayouthome;
 import com.example.myapplication.User.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     EditText emailid,password;
@@ -26,7 +33,7 @@ public class Login extends AppCompatActivity {
     TextView signupbtn,adminlgnbtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
-    public String uid;
+    public String uid,userkey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class Login extends AppCompatActivity {
                 OpenSignupPage();
             }
         });
+        emailid.setText("amanbaid99@gmail.com");
+        password.setText("amanbaid99");
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +86,28 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                              uid = fAuth.getUid();
-                            Toast.makeText(getApplicationContext(), "" + uid, Toast.LENGTH_SHORT).show();
-                            if (task.isSuccessful() && uid == "91tt9V8ZcoSQJzswXOnw505PWo23") {
-                                startActivity(new Intent(getApplicationContext(), AdminHome.class));
-                            } else if (task.isSuccessful() && uid!="91tt9V8ZcoSQJzswXOnw505PWo23") {
-                                    Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserDB");
+                            ref.orderByChild("uid").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot child: dataSnapshot.getChildren()){
+                                         userkey = child.getKey();
+//                                        Log.e("Key", userkey);
+//                                        Toast.makeText(getApplicationContext(),""+userkey,Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                         if (task.isSuccessful()) {
+                             Toast.makeText(Login.this, "Login Successfull"+uid, Toast.LENGTH_SHORT).show();
+                             Intent j = new Intent(getApplicationContext(), MainActivity.class);
+                             j.putExtra("Ukey",userkey);
+                             startActivity(j);
                                 } else {
                                     Toast.makeText(Login.this, "Error Logging In" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
