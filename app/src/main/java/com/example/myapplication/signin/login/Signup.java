@@ -164,6 +164,7 @@ public class Signup extends AppCompatActivity {
                     databaseReference.child(uid).setValue(userdb);
 
 
+
                     Toast.makeText(Signup.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),Login.class));
                 }

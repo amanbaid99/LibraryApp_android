@@ -56,7 +56,6 @@ public class MainActivity extends Login  {
     private FirebaseAnalytics mFirebaseAnalytics;
     FirebaseAuth fAuth;
     ImageView profile;
-    TextView Uname,Email;
 
 
     @Override
@@ -67,7 +66,6 @@ public class MainActivity extends Login  {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         profile=(ImageView) findViewById(R.id.profileimg);
         reference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference reff=FirebaseDatabase.getInstance().getReference().child("UserDB");
         reference.keepSynced(true);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
@@ -84,35 +82,7 @@ public class MainActivity extends Login  {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         fAuth= FirebaseAuth.getInstance();
-        Uname=(TextView) findViewById(R.id.unamedisplay);
-        Email=(TextView) findViewById(R.id.emaildisplay);
-
-
-
-
-        String UserKey = getIntent().getStringExtra("Ukey");
-        Toast.makeText(getApplicationContext(),"hellloo"+userkey,Toast.LENGTH_LONG).show();
-               if(userkey!=null) {
-
-                   reff.child(userkey).addListenerForSingleValueEvent(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           String mname = dataSnapshot.child("fullName").getValue().toString();
-                           Uname.setText("hellooooo");
-                           String Memail = dataSnapshot.child("email").getValue().toString();
-                           Email.setText(Memail);
-//                        Picasso.get().load()
-                       }
-
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                       }
-                   });
-               }
-
-
-
+        final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
                 .setQuery(reference.child("books"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
@@ -175,9 +145,9 @@ public class MainActivity extends Login  {
                 startActivity(search);
                 }
                 else if(id== R.id.Profile) {
-
-                    Intent intent = new Intent(getApplicationContext(), Profile.class);
-                    startActivity(intent);
+                    Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
+                    sendtopro.putExtra("Ukey",UserId);
+                    startActivity(sendtopro);
                 }
                 else if(id== R.id.addbkbtn) {
 
@@ -212,8 +182,6 @@ public class MainActivity extends Login  {
             super.onBackPressed();
         }
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -221,22 +189,18 @@ public class MainActivity extends Login  {
             adapter.startListening();
         loading.setVisibility(View.VISIBLE);
     }
-
     @Override
     protected void onStop() {
         super.onStop();
         if (adapter != null)
             adapter.stopListening();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         if (adapter != null)
             adapter.startListening();
     }
-
-
 }
 
 

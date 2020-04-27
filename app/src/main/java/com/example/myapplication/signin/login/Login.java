@@ -17,6 +17,7 @@ import com.example.myapplication.Admin.AdminHome;
 import com.example.myapplication.User.Bookdetailslayouthome;
 import com.example.myapplication.User.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.User.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +34,10 @@ public class Login extends AppCompatActivity {
     TextView signupbtn,adminlgnbtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
-    public String uid,userkey;
+    public  String uid;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class Login extends AppCompatActivity {
 
                 }
                 if (EmailID.equals("admin@email.com") && Password.equals("12345678")) {
-                    Toast.makeText(getApplicationContext(), "Login Successfull", Toast.LENGTH_SHORT).show();
+                    final String UserId = getIntent().getStringExtra("ID");
                     startActivity(new Intent(getApplicationContext(), AdminHome.class));
                 } else {
 
@@ -84,34 +88,18 @@ public class Login extends AppCompatActivity {
                     fAuth.signInWithEmailAndPassword(EmailID, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
                              uid = fAuth.getUid();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserDB");
-                            ref.orderByChild("uid").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot child: dataSnapshot.getChildren()){
-                                         userkey = child.getKey();
-//                                        Log.e("Key", userkey);
-//                                        Toast.makeText(getApplicationContext(),""+userkey,Toast.LENGTH_LONG).show();
-                                    }
 
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
                          if (task.isSuccessful()) {
-                             Toast.makeText(Login.this, "Login Successfull"+uid, Toast.LENGTH_SHORT).show();
                              Intent j = new Intent(getApplicationContext(), MainActivity.class);
-                             j.putExtra("Ukey",userkey);
+                             j.putExtra("ID",uid);
                              startActivity(j);
+                             Toast.makeText(Login.this, "Login Successfull"+uid, Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(Login.this, "Error Logging In" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
+
 
                         }
 
