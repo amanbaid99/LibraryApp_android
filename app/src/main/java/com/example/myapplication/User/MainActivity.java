@@ -53,7 +53,6 @@ public class MainActivity extends Login  {
     NavigationView navbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
-    private FirebaseAnalytics mFirebaseAnalytics;
     FirebaseAuth fAuth;
     ImageView profile;
 
@@ -63,8 +62,6 @@ public class MainActivity extends Login  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cardView = (CardView) findViewById(R.id.bookcardview);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        profile=(ImageView) findViewById(R.id.profileimg);
         reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -84,12 +81,12 @@ public class MainActivity extends Login  {
         fAuth= FirebaseAuth.getInstance();
         final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference.child("books"), Bookdeets.class).build();
+                .setQuery(reference, Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
 
-                final String key = getRef(position).getKey();
+                final String key = getRef(position).getParent().toString();
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

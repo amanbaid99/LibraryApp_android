@@ -8,13 +8,12 @@ public class Bookdeets {
     private String Publisher;
     private String link;
     private String Desc;
-    private String id;
+    private int id;
 
     public Bookdeets() {
     }
 
-    public Bookdeets(String bookname, String image, String author, String publisher, String link, String desc, String id) {
-
+    public Bookdeets(String bookname, String image, String author, String publisher, String link, String desc, int id) {
         this.bookname = bookname;
         this.image = image;
         this.author = author;
@@ -72,11 +71,11 @@ public class Bookdeets {
         Desc = desc;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

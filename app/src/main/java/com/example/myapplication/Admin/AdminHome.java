@@ -3,84 +3,134 @@ package com.example.myapplication.Admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.example.myapplication.R;
-import com.example.myapplication.User.MainActivity;
+import com.example.myapplication.User.Bkhomeholder;
+import com.example.myapplication.User.Bookdeets;
+import com.example.myapplication.User.Bookdetailslayouthome;
+import com.example.myapplication.User.Profile;
 import com.example.myapplication.User.SearchPage;
 import com.example.myapplication.signin.login.Login;
+import com.example.myapplication.signin.login.UserDB;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class AdminHome extends AppCompatActivity {
+    public CardView cardView;
+    RecyclerView recyclerView;
+    DatabaseReference reference;
+    FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder> adapter;
+    FirebaseRecyclerOptions<Bookdeets> options;
+    FirebaseRecyclerOptions<UserDB> useroptions;
+    FirebaseRecyclerAdapter<UserDB, Bkhomeholder> useradapter;
+    ProgressBar loading;
+    View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;
-    ActionBarDrawerToggle ntoggle;
-    View header;
-    Button updatebtn,addbooksbtn,viewbooks;
-    private boolean mToolBarNavigationListenerIsRegistered = false;
-
+    ActionBarDrawerToggle mtoggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminhome);
-        updatebtn=(Button) findViewById(R.id.Update_deletebooks);
-        addbooksbtn=(Button) findViewById(R.id.AddBooks);
-        viewbooks=(Button) findViewById(R.id.viewbtopbooks);
-        navbar = (NavigationView) findViewById(R.id.draweradmin);
+        cardView = (CardView) findViewById(R.id.bookcardview);
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.keepSynced(true);
+        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        loading = (ProgressBar) findViewById(R.id.loading);
+        navbar = (NavigationView) findViewById(R.id.drawer);
         navbar.bringToFront();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         header = navbar.getHeaderView(0);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayadmin);
-        ntoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerLayout.addDrawerListener(ntoggle);
-        ntoggle.syncState();
-
-        viewbooks.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        drawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
+                .setQuery(reference, Bookdeets.class).build();
+        adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
-            public void onClick(View v) {
-                Intent nb=new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(nb);
+            protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
+
+                final String key = getRef(position).getParent().toString();
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), AdminBookdetails.class);
+                        i.putExtra("key", key);
+                        startActivity(i);
+                    }
+                });
+                Picasso.get().load(model.getImage()).into(holder.bookimg, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        loading.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getApplicationContext(), "could not get the image", Toast.LENGTH_LONG).show();
+                        loading.setVisibility(View.GONE);
+                    }
+                });
+                holder.title.setText(model.getBookname());
             }
-        });
 
-        updatebtn.setOnClickListener(new View.OnClickListener() {
+            @NonNull
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), SearchPage.class);
-                intent.putExtra("id","Adminsearch");
-                   startActivity(intent);      }
-        });
-        addbooksbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent abd=new Intent(getApplicationContext(),Addbooks.class);
-                startActivity(abd);
-
+            public Bkhomeholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewlay, parent, false);
+                return new Bkhomeholder(view);
             }
-        });
+        };
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
         navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 drawerLayout.closeDrawers();
+
                 if(id== R.id.home) {
+
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
-
+                else if(id== R.id.EditBooks) {
+//                    Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
+                    Intent h = new Intent(getApplicationContext(), AdminSearch.class);
+                    startActivity(h);
+                }
 
                 else if(id== R.id.Logoutbtn) {
+//                    fAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(), Login.class);
-                    intent.putExtra("finish", true); // if you are checking for this in your other Activities
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 }
@@ -89,9 +139,10 @@ public class AdminHome extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (ntoggle.onOptionsItemSelected(item)) {
+        if (mtoggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -105,6 +156,23 @@ public class AdminHome extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (adapter != null)
+            adapter.startListening();
+        loading.setVisibility(View.VISIBLE);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (adapter != null)
+            adapter.stopListening();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null)
+            adapter.startListening();
+    }
 }

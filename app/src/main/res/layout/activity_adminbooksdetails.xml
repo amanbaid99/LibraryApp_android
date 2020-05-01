@@ -6,92 +6,24 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical">
 
-<LinearLayout android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    >
-    <LinearLayout android:layout_height="wrap_content"
-        android:layout_width="120dp"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:id="@+id/bkid"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="12dp"
-            android:text="Book ID:"
-            android:textSize="18dp"
-            android:gravity="center_vertical"
-            />
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="12dp"
-
-            android:text="Book Name:"
-            android:textSize="18dp"
-            android:gravity="center_vertical"
-            />
-        <TextView
-            android:id="@+id/autor"
-            android:layout_width="match_parent"
-
-            android:text="Author Name:"
-            android:layout_height="60dp"
-            android:textSize="18dp"
-            android:gravity="center_vertical"
-            />
-
-        <TextView
-            android:id="@+id/publisher"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-
-            android:text="Publisher Name:"
-            android:textSize="16dp"
-            android:gravity="center_vertical"
-            />
-
-        <TextView
-            android:id="@+id/booklocation"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textAlignment="center"
-            android:text="Download Links:"
-            android:textSize="14dp"
-            android:gravity="center_vertical"
-            />
-        <TextView
-            android:id="@+id/bookdescription"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:textAlignment="center"
-            android:text="Description:"
-            android:textSize="14dp"
-            />
-        <TextView
-            android:id="@+id/linkimg"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textAlignment="center"
-            android:text="img link:"
-            android:textSize="14dp"
-            android:gravity="center_vertical"
-            />
 
 
-
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         >
+        <ImageView
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            ></ImageView>
+
         <EditText
             android:id="@+id/uid"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textAlignment="center"
             android:text="Book ID"
@@ -100,7 +32,7 @@ android:orientation="vertical">
         <EditText
             android:id="@+id/bknames"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textAlignment="center"
             android:text="Book Name"
@@ -109,68 +41,55 @@ android:orientation="vertical">
         <EditText
             android:id="@+id/anames"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="Author Name"
             android:textSize="16dp"
             />
 
-        <EditText
-            android:id="@+id/pnames"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textAlignment="center"
-            android:text="Publisher Name"
-            android:textSize="16dp"
-            />
 
-        <EditText
-            android:id="@+id/bklinks"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textAlignment="center"
-            android:textColor="#3F51B5"
-            android:text="Link"
-            android:textStyle="bold"
-            android:textSize="14dp"
-            />
-        <EditText
-            android:id="@+id/bkdescriptions"
-            android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:text="Description"
-            android:textSize="14dp"
-            android:scrollbars="vertical"
-
-            />
         <EditText
             android:id="@+id/imglinks"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:text="imglink"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:scrollbars="vertical"
             />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal">
+        <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Update"
+            android:layout_marginTop="12dp"
+            android:id="@+id/updatebtn"
+            />
+
+        <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Delete"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
+            android:id="@+id/deltebtn"
+            />
+
+
+        <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Add to Top Books"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="18dp"
+            android:id="@+id/AddToTopBooks"
+            />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </LinearLayout>
 
-</LinearLayout>
-
-<Button android:layout_height="60dp"
-    android:layout_width="150dp"
-    android:text="Update"
-    android:layout_marginTop="620dp"
-    android:layout_marginStart="32dp"
-    android:id="@+id/updatebtn"
-    />
-
-<Button android:layout_height="60dp"
-    android:layout_width="150dp"
-    android:text="Delete"
-    android:layout_marginStart="220dp"
-    android:layout_marginTop="620dp"
-    android:id="@+id/deltebtn"
-    />
 
 
 

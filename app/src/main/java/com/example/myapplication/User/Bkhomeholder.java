@@ -21,9 +21,6 @@ public class Bkhomeholder extends RecyclerView.ViewHolder {
     public Bkhomeholder(@NonNull View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.bkdettitle);
-        name = itemView.findViewById(R.id.unamedisplay);
-        email = itemView.findViewById(R.id.emaildisplay);
-        profilepic = itemView.findViewById(R.id.profileimg);
         bookimg = itemView.findViewById(R.id.bkdetimg);
         cardView=itemView.findViewById(R.id.bookcardview);
 

@@ -45,7 +45,7 @@ public class Bookdetailslayouthome extends SearchPage {
         pub = (TextView) findViewById(R.id.pname);
 //        description = (TextView) findViewById(R.id.bkdescription);
         link = (TextView) findViewById(R.id.bklink);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("books");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         navbar1 = (NavigationView) findViewById(R.id.drawer);
         navbar1.bringToFront();
         drawerLayout1 = (DrawerLayout) findViewById(R.id.drawerlay);
@@ -55,6 +55,7 @@ public class Bookdetailslayouthome extends SearchPage {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout1.addDrawerListener(mtoggle1);
         mtoggle1.syncState();
+        String key = getIntent().getStringExtra("key");
 
 
 //retriving search on click  data from firebase
@@ -92,7 +93,6 @@ public class Bookdetailslayouthome extends SearchPage {
         //retriving onclick data from homepage
 
         {
-                String key = getIntent().getStringExtra("Ukey");
                if(key!=null) {
                    databaseReference.child(key).addValueEventListener(new ValueEventListener() {
                        @Override

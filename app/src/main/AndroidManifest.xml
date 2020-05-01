@@ -19,10 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User.header_layout"></activity>
+        <activity android:name=".Admin.AdminHome"></activity>
         <activity android:name=".User.Profile" />
         <activity android:name=".Admin.Addbooks" />
-        <activity android:name=".Admin.AdminHome" />
         <activity android:name=".Admin.AdminBookdetails" />
         <activity android:name=".Admin.AdminSearch" />
         <activity android:name=".User.Bookdetailslayouthome" />

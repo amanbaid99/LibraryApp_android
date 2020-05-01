@@ -78,7 +78,7 @@ public class SearchPage extends AppCompatActivity {
             }
 
             private void setAdapter(final String searchedString) {
-                reference.child("books").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         BookNameList.clear();
