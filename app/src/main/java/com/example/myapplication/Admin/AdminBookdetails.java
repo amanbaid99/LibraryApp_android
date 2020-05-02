@@ -24,9 +24,6 @@ public class AdminBookdetails extends AdminSearch {
         setContentView(R.layout.activity_adminbooksdetails);
         titles = (EditText) findViewById(R.id.bknames);
         authors = (EditText) findViewById(R.id.anames);
-        pubs = (EditText) findViewById(R.id.pnames);
-        linkss = (EditText) findViewById(R.id.bklinks);
-        descss = (EditText) findViewById(R.id.bkdescriptions);
         Imglnk=(EditText) findViewById(R.id.imglinks);
         update=(Button)findViewById(R.id.updatebtn);
         delete=(Button)findViewById(R.id.deltebtn);

@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Admin.AdminHome;
 import com.example.myapplication.User.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     EditText emailid,password;
@@ -26,7 +32,8 @@ public class Login extends AppCompatActivity {
     TextView signupbtn,adminlgnbtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
-    public  String uid;
+    public  String uid,name;
+
 
 
     @Override
@@ -45,8 +52,9 @@ public class Login extends AppCompatActivity {
                 OpenSignupPage();
             }
         });
-        emailid.setText("amanbaid99@gmail.com");
-        password.setText("amanbaid99");
+        emailid.setText("admin@admin.com");
+        password.setText("admin12345");
+        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,28 +74,56 @@ public class Login extends AppCompatActivity {
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
+
+
+
                     fAuth.signInWithEmailAndPassword(EmailID, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                             uid = fAuth.getUid();
-                             FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                            uid = fAuth.getUid();
+                            if(!uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
+                                reference.child("UserDB").child(uid).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        name = dataSnapshot.child("fullName").getValue().toString();
+                                    }
 
-                         if (task.isSuccessful()) {
-                             Intent j = new Intent(getApplicationContext(), MainActivity.class);
-                             j.putExtra("ID",uid);
-                             startActivity(j);
-                             Toast.makeText(Login.this, ""+user, Toast.LENGTH_SHORT).show();
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-//                             Toast.makeText(Login.this, "Login Successfull"+uid, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Login.this, "Error Logging In" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                                    }
+                                });
+                            }
+
+
+
+                            if (task.isSuccessful() && uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
+                                Intent a = new Intent(getApplicationContext(), AdminHome.class);
+                                a.putExtra("ID", uid);
+                                startActivity(a);
+                                Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(Login.this, "Welcome Admin", Toast.LENGTH_SHORT).show();
+                            }
+
+                                if (task.isSuccessful() && !uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
+                                Intent j = new Intent(getApplicationContext(), MainActivity.class);
+                                j.putExtra("ID", uid);
+                                startActivity(j);
+                                Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Welcome " +name, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Login.this, "Error Logging In" + task.getException(), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
                         }
                     });
+
             }
         });
     }
+
     public void OpenSignupPage(){
         Intent snppg=new Intent(getApplicationContext(),Signup.class);
         startActivity(snppg);

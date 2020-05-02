@@ -8,72 +8,10 @@
 
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        >
-        <LinearLayout android:layout_height="wrap_content"
-            android:layout_width="120dp"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/bkid"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:text="Book ID:"
-                android:textSize="18dp"
-                android:gravity="center_vertical"
-                />
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
+        android:orientation="vertical"
 
-                android:text="Book Name:"
-                android:textSize="18dp"
-                android:gravity="center_vertical"
-                />
-            <TextView
-                android:id="@+id/autor"
-                android:layout_width="match_parent"
+        android:layout_margin="12dp">
 
-                android:text="Author Name:"
-                android:layout_height="60dp"
-                android:textSize="18dp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/publisher"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-
-                android:text="Publisher Name:"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/booklocation"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Download Links:"
-                android:textSize="14dp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/linkimg"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="img link:"
-                android:textSize="14dp"
-                android:gravity="center_vertical"
-                />
-
-
-
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -82,78 +20,69 @@
             <EditText
                 android:id="@+id/uid"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:textAlignment="center"
                 android:hint="Book ID"
-                android:textSize="20dp"
+                android:textSize="22dp"
                 />
             <EditText
                 android:id="@+id/bknames"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:textAlignment="center"
                 android:hint="Book Name"
-                android:textSize="20dp"
+                android:textSize="22dp"
                 />
             <EditText
                 android:id="@+id/anames"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:hint="Author Name"
-                android:textSize="16dp"
-                />
-
-            <EditText
-                android:id="@+id/pnames"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:textAlignment="center"
-                android:hint="Publisher Name"
-                android:textSize="16dp"
-                />
-
-            <EditText
-                android:id="@+id/bklinks"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:textAlignment="center"
-                android:textColor="#3F51B5"
-                android:hint="Book Link"
-                android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="22dp"
                 />
 
             <EditText
                 android:id="@+id/imglinks"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:hint="imglink"
-                android:textSize="14dp"
+                android:textAlignment="center"
+                android:textSize="22dp"
                 android:scrollbars="vertical"
                 />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal">
+
+            <Button android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="ADD Book"
+                android:layout_marginStart="0dp"
+                android:id="@+id/addbkbtn"
+                />
+
+            <Button 
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Clear the fields"
+                android:id="@+id/ClearFeild"
+                android:layout_marginStart="12dp"
+                />
+        
+            
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Button android:layout_height="60dp"
-        android:layout_width="150dp"
-        android:text="ADD Book"
-        android:layout_marginTop="620dp"
-        android:layout_marginStart="32dp"
-        android:id="@+id/addbkbtn"
-        />
-
-    <Button android:layout_height="60dp"
-        android:layout_width="150dp"
-        android:text="Clear the fields"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="620dp"
-        android:id="@+id/ClearFeild"
-        />
+  
 
 
 

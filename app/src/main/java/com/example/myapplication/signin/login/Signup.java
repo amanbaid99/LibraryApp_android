@@ -36,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
+import static android.view.View.VISIBLE;
+
 public class Signup extends AppCompatActivity {
     EditText  Fullname, phone, emailid, password;
     Button  Signupbtn,chooseimg;
@@ -144,6 +146,7 @@ public class Signup extends AppCompatActivity {
             return;
 
         }
+        progressBar.setVisibility(VISIBLE);
 
 
         fAuth.createUserWithEmailAndPassword(EmailID,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

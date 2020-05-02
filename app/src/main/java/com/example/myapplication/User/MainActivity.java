@@ -148,8 +148,9 @@ public class MainActivity extends Login  {
                 }
                 else if(id== R.id.addbkbtn) {
 
-                    Intent intent = new Intent(getApplicationContext(), Addbooks.class);
-                    startActivity(intent);
+                    Intent adbk = new Intent(getApplicationContext(), Addbooks.class);
+                    adbk.putExtra("UID","User");
+                    startActivity(adbk);
                 }
                 else if(id== R.id.Logoutbtn) {
                     fAuth.signOut();

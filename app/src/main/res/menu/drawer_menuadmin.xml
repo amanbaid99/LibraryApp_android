@@ -14,6 +14,12 @@
         android:enabled="true"
         android:icon="@drawable/logout"
         android:title="EditBooks" />
+    <item
+        android:id="@+id/tempdb"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/logout"
+        android:title="View Temp Database" />
 
     <item
         android:id="@+id/Logoutbtn"
