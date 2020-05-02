@@ -17,9 +17,9 @@ public class Addbooks extends AppCompatActivity {
     Button Addbooks,refresh;
     EditText titles,authors,pubs,linkss,descss,bookid,Imglnk;
     Bookdeets bookdeets;
-    int flg=0;
-    String check="User";
-
+//
+//    final String uidcheck="null";
+//    final String aidcheck="null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,15 +33,8 @@ public class Addbooks extends AppCompatActivity {
         bookdeets=new Bookdeets();
         final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
 
-        final String idcheck=getIntent().getStringExtra("UID");
-
-
-
-
-        Toast.makeText(getApplicationContext(), ""+flg, Toast.LENGTH_SHORT).show();
-
-
-
+        final String uidcheck=getIntent().getStringExtra("UID");
+        final String aidcheck=getIntent().getStringExtra("admid");
         Addbooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,22 +51,27 @@ public class Addbooks extends AppCompatActivity {
 //                map.put("Desc", Desc);
                 map.put("id", Uid);
 //                map.put("image", Img);
+                if (uidcheck != null) {
 
-                if (idcheck.equals("User")) {
-                    databaseReference.child("TempBookDB").child(Uid).setValue(map);
-                    Toast.makeText(getApplicationContext(), "Book Added succesfully to temp", Toast.LENGTH_SHORT).show();
-
-//                    if (TextUtils.isEmpty(Title) || TextUtils.isEmpty(Author) || TextUtils.isEmpty(Publisher) || TextUtils.isEmpty(Link) || TextUtils.isEmpty(Desc)) {
-//                        titles.setError("Field cant be empty");
-//                    }
-                } else {
-                    databaseReference.child("BookDB").child(Uid).setValue(map);
-                    Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
+                    if (uidcheck.equals("User")) {
+                        databaseReference.child("TempBookDB").child(Uid).setValue(map);
+                        Toast.makeText(getApplicationContext(), "Book Added succesfully to temp", Toast.LENGTH_SHORT).show();
 
 //                    if (TextUtils.isEmpty(Title) || TextUtils.isEmpty(Author) || TextUtils.isEmpty(Publisher) || TextUtils.isEmpty(Link) || TextUtils.isEmpty(Desc)) {
 //                        titles.setError("Field cant be empty");
 //                    }
-                }
+                    }
+                }else {
+
+
+                        databaseReference.child("BookDB").child(Uid).setValue(map);
+                        Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
+                    }
+//                    if (TextUtils.isEmpty(Title) || TextUtils.isEmpty(Author) || TextUtils.isEmpty(Publisher) || TextUtils.isEmpty(Link) || TextUtils.isEmpty(Desc)) {
+//                        titles.setError("Field cant be empty");
+//                    }
+
+
             }
         });
 

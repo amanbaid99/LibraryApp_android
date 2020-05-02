@@ -15,6 +15,12 @@
         android:icon="@drawable/logout"
         android:title="EditBooks" />
     <item
+        android:id="@+id/addbooksadmin"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/logout"
+        android:title="Add New Books" />
+    <item
         android:id="@+id/tempdb"
         android:checkable="false"
         android:enabled="true"

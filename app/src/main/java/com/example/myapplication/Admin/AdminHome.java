@@ -127,6 +127,11 @@ public class AdminHome extends AppCompatActivity {
                     Intent h = new Intent(getApplicationContext(), AdminSearch.class);
                     startActivity(h);
                 }
+                else if(id== R.id.addbooksadmin) {
+                    Intent ad = new Intent(getApplicationContext(), Addbooks.class);
+                    ad.putExtra("admid","Admin");
+                    startActivity(ad);
+                }
 
                 else if(id== R.id.Logoutbtn) {
 //                    fAuth.signOut();
