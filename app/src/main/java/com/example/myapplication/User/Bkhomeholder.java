@@ -13,8 +13,8 @@ import com.example.myapplication.R;
 
 
 public class Bkhomeholder extends RecyclerView.ViewHolder {
-    public TextView title,name,email;
-    public ImageView bookimg,profilepic;
+    public TextView title,name;
+    public ImageView bookimg;
     public CardView cardView;
 
 

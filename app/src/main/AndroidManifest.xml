@@ -19,7 +19,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Admin.AdminHome"></activity>
+        <activity android:name=".Admin.TempBooksLayout"></activity>
+        <activity android:name=".Admin.AdminHome" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".User.Profile" />
         <activity android:name=".Admin.Addbooks" />
         <activity android:name=".Admin.AdminBookdetails" />
@@ -28,13 +36,8 @@
         <activity android:name=".User.SearchPage" />
         <activity android:name=".signin.login.Login" />
         <activity android:name=".User.MainActivity" />
-        <activity android:name=".signin.login.Signup">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".signin.login.Signup"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

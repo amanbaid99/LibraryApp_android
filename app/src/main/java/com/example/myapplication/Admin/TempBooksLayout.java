@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -31,29 +32,30 @@ import com.example.myapplication.signin.login.UserDB;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-public class AdminHome extends AppCompatActivity {
+public class TempBooksLayout extends AppCompatActivity {
     public CardView cardView;
     RecyclerView recyclerView;
     DatabaseReference reference;
     FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder> adapter;
     FirebaseRecyclerOptions<Bookdeets> options;
-    FirebaseRecyclerOptions<UserDB> useroptions;
-    FirebaseRecyclerAdapter<UserDB, Bkhomeholder> useradapter;
     ProgressBar loading;
     View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
+    FirebaseAuth fAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adminhome);
+        setContentView(R.layout.activity_temp_books_layout);
         cardView = (CardView) findViewById(R.id.bookcardview);
         reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
@@ -71,8 +73,10 @@ public class AdminHome extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
+        fAuth= FirebaseAuth.getInstance();
+//        final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference, Bookdeets.class).build();
+                .setQuery(reference.child("TempBookDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
@@ -119,8 +123,9 @@ public class AdminHome extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 if(id== R.id.home) {
+                    Intent h = new Intent(getApplicationContext(), AdminHome.class);
+                    startActivity(h);
 
-                    drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 else if(id== R.id.EditBooks) {
                     Intent h = new Intent(getApplicationContext(), AdminSearch.class);
@@ -128,8 +133,7 @@ public class AdminHome extends AppCompatActivity {
                 }
 
                 else if(id== R.id.tempdb) {
-                    Intent tdb = new Intent(getApplicationContext(), TempBooksLayout.class);
-                    startActivity(tdb);
+                    drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 else if(id== R.id.addbooksadmin) {
                     Intent ad = new Intent(getApplicationContext(), Addbooks.class);
@@ -148,7 +152,6 @@ public class AdminHome extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mtoggle.onOptionsItemSelected(item)) {
