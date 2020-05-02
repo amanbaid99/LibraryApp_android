@@ -79,14 +79,20 @@ public class TempBooksLayout extends AppCompatActivity {
                 .setQuery(reference.child("TempBookDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
+            protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
 
-                final String key = getRef(position).getParent().toString();
+
+
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final String key = getRef(position).getKey().toString();
+                        Toast.makeText(getApplicationContext(),""+key,Toast.LENGTH_LONG).show();
+
                         Intent i = new Intent(getApplicationContext(), AdminBookdetails.class);
                         i.putExtra("key", key);
+                        i.putExtra("id","tempbooks");
                         startActivity(i);
                     }
                 });

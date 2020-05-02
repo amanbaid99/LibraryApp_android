@@ -18,13 +18,15 @@ android:orientation="vertical">
             android:layout_height="175dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="18dp"
+            android:id="@+id/imgview"
+            android:src="@drawable/category"
             ></ImageView>
 
         <EditText
             android:id="@+id/uid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:textAlignment="center"
             android:text="Book ID"
             android:textSize="20dp"
@@ -77,15 +79,26 @@ android:orientation="vertical">
             android:id="@+id/deltebtn"
             />
 
+            <Button android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Add to Main"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/AddtoMain"
+                />
 
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Add to Top Books"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="125dp"
             android:id="@+id/AddToTopBooks"
             />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
     </LinearLayout>

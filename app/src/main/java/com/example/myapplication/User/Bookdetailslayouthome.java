@@ -78,14 +78,6 @@ public class Bookdetailslayouthome extends SearchPage {
                 }
             });
 
-
-
-//            String Desc = getIntent().getStringExtra("description");
-//            description.setText(Desc);
-//            description.setMovementMethod(new ScrollingMovementMethod());
-
-
-
             String imgs = getIntent().getStringExtra("Image");
             Picasso.get().load(imgs).into(image);
         }
@@ -105,9 +97,6 @@ public class Bookdetailslayouthome extends SearchPage {
                            Picasso.get().load(mimgs).into(image);
                            String mpub = dataSnapshot.child("Publisher").getValue().toString();
                            pub.setText("Publisher" + mpub);
-//                    String mdescription=dataSnapshot.child("Desc").getValue().toString();
-//                    description.setText(mdescription);
-//                    description.setMovementMethod(new ScrollingMovementMethod());
                            final String mlink = dataSnapshot.child("link").getValue().toString();
                            link.setText("Click here to buy");
                            link.setOnClickListener(new View.OnClickListener() {
