@@ -95,8 +95,7 @@ public class SearchPage extends AppCompatActivity {
                             String author = snapshot.child("author").getValue(String.class);
                             String image = snapshot.child("image").getValue(String.class);
                             String publisher = snapshot.child("Publisher").getValue(String.class);
-                            String link=snapshot.child("link").getValue(String.class);
-                            String decscription=snapshot.child("Desc").getValue(String.class);
+
 
                             try {
 
@@ -105,8 +104,7 @@ public class SearchPage extends AppCompatActivity {
                                     AuthorNameList.add(author);
                                     PublisherList.add(publisher);
                                     PicList.add(image);
-                                    DescriptionList.add(decscription);
-                                    LinkList.add(link);
+
                                     counter++;
                                 }
                                 if(BookNameList.isEmpty() && AuthorNameList.isEmpty())

@@ -72,16 +72,18 @@ public class AdminHome extends AppCompatActivity {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference, Bookdeets.class).build();
+                .setQuery(reference.child("TopbooksDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
+            protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
 
-                final String key = getRef(position).getParent().toString();
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final String key = getRef(position).getKey().toString();
                         Intent i = new Intent(getApplicationContext(), AdminBookdetails.class);
+                        i.putExtra("id","bookdetails");
                         i.putExtra("key", key);
                         startActivity(i);
                     }

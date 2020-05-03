@@ -69,6 +69,7 @@ android:orientation="vertical">
             android:text="Update"
             android:layout_marginTop="12dp"
             android:id="@+id/updatebtn"
+
             />
 
         <Button android:layout_height="wrap_content"
@@ -97,6 +98,7 @@ android:orientation="vertical">
             android:layout_marginTop="18dp"
             android:layout_marginStart="125dp"
             android:id="@+id/AddToTopBooks"
+
             />
 
 
