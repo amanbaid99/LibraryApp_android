@@ -1,6 +1,8 @@
 package com.example.myapplication.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.User.Bookdeets;
+import com.example.myapplication.User.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
@@ -39,19 +42,22 @@ public class Addbooks extends AppCompatActivity {
 //                String Link = linkss.getText().toString().trim();
 //                String Desc = descss.getText().toString().trim();
                 String Uid = bookid.getText().toString().trim();
-//                String Img = Imglnk.getText().toString().trim();
+                String Img = Imglnk.getText().toString().trim();
 
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("bookname", Title);
                 map.put("author", Author);
 //              map.put("Desc", Desc);
                 map.put("id", Uid);
-//              map.put("image", Img);
+              map.put("image", Img);
                 if (uidcheck != null) {
 
                     if (uidcheck.equals("User")) {
                         databaseReference.child("TempBookDB").child(Uid).setValue(map);
                         Toast.makeText(getApplicationContext(), "Book Added succesfully to temp DataBase", Toast.LENGTH_SHORT).show();
+                        Intent gb = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(gb);
+
 
                     }
                 }else {
@@ -59,7 +65,10 @@ public class Addbooks extends AppCompatActivity {
 
                         databaseReference.child("BookDB").child(Uid).setValue(map);
                         Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
-                    }
+                    Intent gb = new Intent(getApplicationContext(), AdminHome.class);
+                    startActivity(gb);
+
+                }
 
 
             }

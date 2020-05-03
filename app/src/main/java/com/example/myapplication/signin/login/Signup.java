@@ -40,7 +40,7 @@ import static android.view.View.VISIBLE;
 
 public class Signup extends AppCompatActivity {
     EditText  Fullname, phone, emailid, password;
-    Button  Signupbtn,chooseimg;
+    Button  Signupbtn;
     TextView loginbtn;
     EditText Imgname;
     ImageView imgdisplay;
@@ -69,7 +69,6 @@ public class Signup extends AppCompatActivity {
          fAuth=FirebaseAuth.getInstance();
          progressBar=findViewById(R.id.progressBar);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("UserDB");
-        chooseimg = (Button) findViewById(R.id.imgchooser);
         imgdisplay = (ImageView) findViewById(R.id.imgselectdisplay);
         userdb=new UserDB();
         storage = FirebaseStorage.getInstance();
@@ -82,16 +81,7 @@ public class Signup extends AppCompatActivity {
             password.setText("email.com");
 
             }
-        chooseimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
-        if(fAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                   finish();
-        }
+
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

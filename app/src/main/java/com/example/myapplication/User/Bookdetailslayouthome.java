@@ -86,7 +86,7 @@ public class Bookdetailslayouthome extends SearchPage {
 
         {
                if(key!=null) {
-                   databaseReference.child(key).addValueEventListener(new ValueEventListener() {
+                   databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                            String mtitle = dataSnapshot.child("bookname").getValue().toString();
@@ -95,17 +95,7 @@ public class Bookdetailslayouthome extends SearchPage {
                            author.setText("by " + mauthor);
                            String mimgs = dataSnapshot.child("image").getValue().toString();
                            Picasso.get().load(mimgs).into(image);
-                           String mpub = dataSnapshot.child("Publisher").getValue().toString();
-                           pub.setText("Publisher" + mpub);
-                           final String mlink = dataSnapshot.child("link").getValue().toString();
-                           link.setText("Click here to buy");
-                           link.setOnClickListener(new View.OnClickListener() {
-                               @Override
-                               public void onClick(View v) {
-                                   Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse(mlink));
-                                   startActivity(link);
-                               }
-                           });
+
 
                        }
 

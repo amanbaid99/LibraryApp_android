@@ -81,15 +81,15 @@ public class MainActivity extends Login  {
         fAuth= FirebaseAuth.getInstance();
         final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference, Bookdeets.class).build();
+                .setQuery(reference.child("BookDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull Bkhomeholder holder, int position, @NonNull Bookdeets model) {
+            protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
 
-                final String key = getRef(position).getParent().toString();
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final String key = getRef(position).getKey().toString();
                         Intent i = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
                         i.putExtra("key", key);
                         startActivity(i);
