@@ -28,10 +28,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import io.grpc.InternalWithLogId;
+
 public class AdminBookdetails extends AdminSearch {
     EditText titles, authors, bookid, Imglnk;
     Bookdeets bookdeets;
-    Button update, delete,addtotop;
+    Button update, delete,addtotop,addtomain;
     ImageView imageView;
 
     @Override
@@ -46,6 +48,7 @@ public class AdminBookdetails extends AdminSearch {
         addtotop = (Button) findViewById(R.id.AddToTopBooks);
         delete = (Button) findViewById(R.id.deltebtn);
         bookid = (EditText) findViewById(R.id.uid);
+        addtomain = (Button) findViewById(R.id.AddtoMain);
         bookdeets = new Bookdeets();
         String id = getIntent().getStringExtra("id");
         String key = getIntent().getStringExtra("key");
@@ -70,7 +73,7 @@ public class AdminBookdetails extends AdminSearch {
                     Imglnk.setText(imglnk);
 //                        Toast.makeText(AdminBookdetails.this, ""+imgs, Toast.LENGTH_SHORT).show();
 //                    Picasso.get().load(imglnk).into(imageView);
-                    Glide.with(getApplicationContext()).asBitmap().load(imglnk).into(imageView);
+//                    Glide.with(getApplicationContext()).asBitmap().load(imglnk).into(imageView);
 
 
                 }
@@ -82,18 +85,6 @@ public class AdminBookdetails extends AdminSearch {
             });
         }
 
-//        String uid = getIntent().getStringExtra("uid");
-//
-//        bookid.setText(uid, TextView.BufferType.EDITABLE);
-//
-//        String Bname = getIntent().getStringExtra("booknamess");
-//        titles.setText(Bname, TextView.BufferType.EDITABLE);
-//
-//        final String imglink = getIntent().getStringExtra("Image");
-//        Imglnk.setText(imglink, TextView.BufferType.EDITABLE);
-//
-//        String Author = getIntent().getStringExtra("author_names");
-//        authors.setText(Author, TextView.BufferType.EDITABLE);
         else if(id.equals("tempbooks")) {
             if (key != null) {
                 databaseReference.child("TempBookDB").child(key).addValueEventListener(new ValueEventListener() {
@@ -119,6 +110,50 @@ public class AdminBookdetails extends AdminSearch {
                 });
             }
         }
+        addtomain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Title = titles.getText().toString().trim();
+                String Author = authors.getText().toString().trim();
+                final String Uid = bookid.getText().toString().trim();
+                String Img = Imglnk.getText().toString().trim();
+
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("bookname", Title);
+                map.put("author", Author);
+                map.put("id", Uid);
+                map.put("image", Img);
+                if (databaseReference.child("BookDB").child(Uid).child("id").equals(Uid)) {
+                    Toast.makeText(AdminBookdetails.this, "Book already exits", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    databaseReference.child("BookDB").child(Uid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                databaseReference.child("TempBookDB").child(Uid).setValue(null);
+                                Toast.makeText(AdminBookdetails.this, "Added to Main  Database Successfully", Toast.LENGTH_SHORT).show();
+                                Intent gb = new Intent(getApplicationContext(), AdminHome.class);
+                                startActivity(gb);
+
+                            } else {
+                                Toast.makeText(AdminBookdetails.this, "Task failed try again", Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                        }
+                    });
+
+
+                    if (TextUtils.isEmpty(Title) || TextUtils.isEmpty(Author)) {
+                        titles.setError("Field cant be empty");
+                    }
+                }
+            }
+
+
+        });
 
 
             update.setOnClickListener(new View.OnClickListener() {
