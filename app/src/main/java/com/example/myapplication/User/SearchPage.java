@@ -1,13 +1,20 @@
 package com.example.myapplication.User;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.myapplication.R;
@@ -30,7 +37,8 @@ public class SearchPage extends AppCompatActivity {
     ArrayList<String> LinkList;
     ArrayList<String> DescriptionList;
     FirebaseAnalytics mFirebaseAnalytics;
-
+    ActionBarDrawerToggle mtoggle;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,7 @@ public class SearchPage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         BookNameList = new ArrayList<>();
         PublisherList = new ArrayList<>();
         AuthorNameList = new ArrayList<>();
@@ -53,8 +61,6 @@ public class SearchPage extends AppCompatActivity {
         DescriptionList=new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
         searchbar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,6 +134,12 @@ public class SearchPage extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent gob=new Intent(getApplicationContext(),MainActivity.class);
+//        startActivity(gob);
     }
 }

@@ -46,15 +46,12 @@ public class MainActivity extends Login  {
     DatabaseReference reference;
     FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder> adapter;
     FirebaseRecyclerOptions<Bookdeets> options;
-    FirebaseRecyclerOptions<UserDB> useroptions;
-    FirebaseRecyclerAdapter<UserDB, Bkhomeholder> useradapter;
     ProgressBar loading;
     View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
     FirebaseAuth fAuth;
-    ImageView profile;
 
 
     @Override

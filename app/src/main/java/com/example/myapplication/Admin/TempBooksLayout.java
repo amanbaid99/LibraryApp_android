@@ -74,15 +74,11 @@ public class TempBooksLayout extends AppCompatActivity {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         fAuth= FirebaseAuth.getInstance();
-//        final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
                 .setQuery(reference.child("TempBookDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
-
-
-
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
