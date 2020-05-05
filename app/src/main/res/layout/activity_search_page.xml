@@ -30,10 +30,21 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
             />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adbksearch"
+        android:text="Couldn't Find Book? click here to Add Book"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true">
+    </TextView>
+
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer"
@@ -41,8 +52,6 @@
         android:layout_height="match_parent"
         app:menu="@menu/drawer_menu"
         android:layout_gravity="start"/>
-
-
 
 </LinearLayout>
 

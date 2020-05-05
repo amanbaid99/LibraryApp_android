@@ -14,9 +14,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.myapplication.Admin.Addbooks;
 import com.example.myapplication.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +34,7 @@ import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
     EditText searchbar;
+    TextView addbks;
     RecyclerView recyclerView;
     DatabaseReference reference;
     ArrayList<String> BookNameList;
@@ -40,10 +47,12 @@ public class SearchPage extends AppCompatActivity {
     ActionBarDrawerToggle mtoggle;
     DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
+        addbks=(TextView) findViewById(R.id.adbksearch);
         searchbar = (EditText) findViewById(R.id.searchbar);
         reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
@@ -61,7 +70,18 @@ public class SearchPage extends AppCompatActivity {
         DescriptionList=new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        searchbar.addTextChangedListener(new TextWatcher() {
+        addbks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gtabks=new Intent(getApplicationContext(), Addbooks.class);
+                gtabks.putExtra("UID","User");
+                startActivity(gtabks);
+
+            }
+        });
+
+
+            searchbar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -82,6 +102,7 @@ public class SearchPage extends AppCompatActivity {
 
                 }
             }
+
 
             private void setAdapter(final String searchedString) {
                 reference.child("BookDB").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,6 +127,7 @@ public class SearchPage extends AppCompatActivity {
                             try {
 
                                 if ((bookname.toLowerCase().contains(searchedString.toLowerCase())) || (author.toLowerCase().contains(searchedString.toLowerCase()))) {
+
                                     BookNameList.add(bookname);
                                     AuthorNameList.add(author);
                                     PublisherList.add(publisher);
@@ -115,6 +137,9 @@ public class SearchPage extends AppCompatActivity {
                                 }
                                 if(BookNameList.isEmpty() && AuthorNameList.isEmpty())
                                 {
+
+
+
 
 //                                    Toast.makeText(getApplicationContext(),"empty",Toast.LENGTH_LONG).show();
                                 }
@@ -142,4 +167,4 @@ public class SearchPage extends AppCompatActivity {
 //        Intent gob=new Intent(getApplicationContext(),MainActivity.class);
 //        startActivity(gob);
     }
-}
+    }

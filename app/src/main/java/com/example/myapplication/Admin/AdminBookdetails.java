@@ -90,7 +90,7 @@ public class AdminBookdetails extends AdminSearch {
                 databaseReference.child("TempBookDB").child(key).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String bkid = dataSnapshot.child("id").getValue().toString();
+                        String bkid = dataSnapshot.child("id").getValue();
                         bookid.setText(bkid);
                         String mtitle = dataSnapshot.child("bookname").getValue().toString();
                         titles.setText(mtitle);
@@ -99,7 +99,7 @@ public class AdminBookdetails extends AdminSearch {
                         String imglnk = dataSnapshot.child("image").getValue().toString();
                         Imglnk.setText(imglnk);
 //                        Toast.makeText(AdminBookdetails.this, ""+imgs, Toast.LENGTH_SHORT).show();
-                        Picasso.get().load(imglnk).into(imageView);
+//                        Picasso.get().load(imglnk).into(imageView);
 
                     }
 
