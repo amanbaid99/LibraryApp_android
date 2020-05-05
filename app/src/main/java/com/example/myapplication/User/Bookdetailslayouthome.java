@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class Bookdetailslayouthome extends SearchPage {
 
-    TextView title, author, pub,description,link;
+    TextView title, author, pub;
     ImageView image;
     View header;
     NavigationView navbar1;
@@ -42,9 +42,6 @@ public class Bookdetailslayouthome extends SearchPage {
         image = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.bkname);
         author = (TextView) findViewById(R.id.aname);
-        pub = (TextView) findViewById(R.id.pname);
-//        description = (TextView) findViewById(R.id.bkdescription);
-        link = (TextView) findViewById(R.id.bklink);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         navbar1 = (NavigationView) findViewById(R.id.drawer);
         navbar1.bringToFront();
@@ -65,18 +62,7 @@ public class Bookdetailslayouthome extends SearchPage {
             String Author = getIntent().getStringExtra("author_name");
             author.setText("Author:"+Author);
 
-            String publisher = getIntent().getStringExtra("publisher_name");
-            pub.setText("Publisher:"+publisher);
 
-            final String Link = getIntent().getStringExtra("link");
-            link.setText("Click here to buy");
-            link.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent link=new Intent(Intent.ACTION_VIEW, Uri.parse(Link));
-                    startActivity(link);
-                }
-            });
 
             String imgs = getIntent().getStringExtra("Image");
             Picasso.get().load(imgs).into(image);
