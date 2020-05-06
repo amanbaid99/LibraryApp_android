@@ -31,7 +31,7 @@
             android:id="@+id/addbkbtn"
             android:checkable="false"
             android:enabled="true"
-            android:icon="@drawable/search"
+            android:icon="@drawable/addbutton"
             android:title="Add Books"
             />
 
