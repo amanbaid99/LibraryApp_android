@@ -72,7 +72,7 @@ public class AdminSearch extends AppCompatActivity {
             }
 
             private void setAdapter(final String searchedString) {
-                referencee.child("books").addListenerForSingleValueEvent(new ValueEventListener() {
+                referencee.child("BookDB").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         BookNameLists.clear();

@@ -35,14 +35,14 @@ public class Profile extends Login {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         navbar = (NavigationView) findViewById(R.id.drawer);
         navbar.bringToFront();
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         header = navbar.getHeaderView(0);
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(mtoggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         fAuth = FirebaseAuth.getInstance();
         Greetings = (TextView) findViewById(R.id.greetings);
@@ -72,34 +72,31 @@ public class Profile extends Login {
             navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                     int id = item.getItemId();
                     drawerLayout.closeDrawers();
-
                     if (id == R.id.Profile) {
-
                         drawerLayout.closeDrawer(GravityCompat.START);
-                    } else if (id == R.id.browse) {
+                    }
+                    else if (id == R.id.browse) {
                         Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG).show();
 //                    Intent h = new Intent(getApplicationContext(), MainActivity.class);
 //                    startActivity(h);
-                    } else if (id == R.id.search) {
-
+                    }
+                    else if (id == R.id.search) {
                         Intent search = new Intent(getApplicationContext(), SearchPage.class);
                         startActivity(search);
-                    } else if (id == R.id.home) {
-
+                    }
+                    else if (id == R.id.home) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
-
-
-                    } else if (id == R.id.Logoutbtn) {
+                    }
+                    else if (id == R.id.Logoutbtn) {
                         fAuth.signOut();
                         Intent intent = new Intent(getApplicationContext(), Login.class);
                         startActivity(intent);
                         finish();
-
                     }
-
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return true;
 

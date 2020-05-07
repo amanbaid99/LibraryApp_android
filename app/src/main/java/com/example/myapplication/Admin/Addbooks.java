@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.User.Bookdeets;
@@ -16,7 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
-public class Addbooks extends AppCompatActivity {
+public class Addbooks extends AppCompatActivity  implements
+        AdapterView.OnItemSelectedListener{
     Button Addbooks,refresh;
     EditText titles,authors,pubs,linkss,descss,bookid,Imglnk;
     Bookdeets bookdeets;
@@ -31,8 +34,9 @@ public class Addbooks extends AppCompatActivity {
         Imglnk=(EditText) findViewById(R.id.imglinks);
         bookid=(EditText)findViewById(R.id.uid);
         bookdeets=new Bookdeets();
+        Spinner spin;
+        String[] dpoptions = { "Fiction","Non-Fiction"};
         final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
-
         final String uidcheck=getIntent().getStringExtra("UID");
         Addbooks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +51,6 @@ public class Addbooks extends AppCompatActivity {
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("bookname", Title);
                 map.put("author", Author);
-//              map.put("Desc", Desc);
                 map.put("id", Uid);
               map.put("image", Img);
                 if (uidcheck != null) {
@@ -85,5 +88,15 @@ public class Addbooks extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

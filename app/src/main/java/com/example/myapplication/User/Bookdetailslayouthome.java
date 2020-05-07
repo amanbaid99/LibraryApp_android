@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class Bookdetailslayouthome extends SearchPage {
+
 
     TextView title, author, pub;
     ImageView image;
@@ -32,6 +38,8 @@ public class Bookdetailslayouthome extends SearchPage {
     NavigationView navbar1;
     DrawerLayout drawerLayout1;
     ActionBarDrawerToggle mtoggle1;
+    String uid,key;
+    DatabaseReference databaseReference;
 
 
 
@@ -42,7 +50,7 @@ public class Bookdetailslayouthome extends SearchPage {
         image = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.bkname);
         author = (TextView) findViewById(R.id.aname);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+         databaseReference = FirebaseDatabase.getInstance().getReference();
         navbar1 = (NavigationView) findViewById(R.id.drawer);
         navbar1.bringToFront();
         drawerLayout1 = (DrawerLayout) findViewById(R.id.drawerlay);
@@ -52,25 +60,19 @@ public class Bookdetailslayouthome extends SearchPage {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout1.addDrawerListener(mtoggle1);
         mtoggle1.syncState();
-        String key = getIntent().getStringExtra("key");
+        key = getIntent().getStringExtra("key");
+        uid=getIntent().getStringExtra("uid");
 
 
-//retriving search on click  data from firebase
-        { String Bname = getIntent().getStringExtra("booknames");
-            title.setText("Book Name:"+Bname);
+//     retriving  from search  page
+        String mtitle = getIntent().getStringExtra("booknames");
+            title.setText("Book Name:"+mtitle);
+            String mauthor = getIntent().getStringExtra("author_name");
+            author.setText("Author:"+mauthor);
+            String mimgs = getIntent().getStringExtra("Image");
+            Picasso.get().load(mimgs).into(image);
 
-            String Author = getIntent().getStringExtra("author_name");
-            author.setText("Author:"+Author);
 
-
-
-            String imgs = getIntent().getStringExtra("Image");
-            Picasso.get().load(imgs).into(image);
-        }
-
-        //retriving onclick data from homepage
-
-        {
                if(key!=null) {
                    databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
                        @Override
@@ -81,49 +83,33 @@ public class Bookdetailslayouthome extends SearchPage {
                            author.setText("by " + mauthor);
                            String mimgs = dataSnapshot.child("image").getValue().toString();
                            Picasso.get().load(mimgs).into(image);
-
-
+                           String mid=dataSnapshot.child("id").getValue().toString();
                        }
-
                        @Override
                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
                        }
                    });
                }
-
-            navbar1.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+               navbar1.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     int id = item.getItemId();
                     drawerLayout1.closeDrawers();
-
                     if(id== R.id.home) {
-
                         Intent search = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(search);
                     }
                     else if(id== R.id.browse) {
                         Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
-//                    Intent h = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(h);
-                    }
+                  }
                     else if(id== R.id.search) {
-
                         Intent search = new Intent(getApplicationContext(), SearchPage.class);
                         startActivity(search);
                     }
                     else if(id== R.id.Profile) {
-
                         Intent intent = new Intent(getApplicationContext(), Profile.class);
                         startActivity(intent);
-
-
                     }
-
-
-
-
                     else if(id== R.id.Logoutbtn) {
                         Intent intent = new Intent(getApplicationContext(), Login.class);
                         intent.putExtra("finish", true); // if you are checking for this in your other Activities
@@ -132,19 +118,14 @@ public class Bookdetailslayouthome extends SearchPage {
                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
-
                     }
-
                     drawerLayout1.closeDrawer(GravityCompat.START);
                     return true;
-
                 }
 
             });
-
-
     }
-    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mtoggle1.onOptionsItemSelected(item)) {
@@ -152,6 +133,7 @@ public class Bookdetailslayouthome extends SearchPage {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout1.isDrawerOpen(GravityCompat.START)) {
@@ -160,4 +142,5 @@ public class Bookdetailslayouthome extends SearchPage {
             super.onBackPressed();
         }
     }
+
 }

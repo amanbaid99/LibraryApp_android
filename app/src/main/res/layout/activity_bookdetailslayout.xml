@@ -39,7 +39,7 @@
                 android:layout_marginTop="12dp"
                 android:textAlignment="center"
                 android:text="Book Name"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 />
             <TextView
                 android:id="@+id/aname"
@@ -47,28 +47,27 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="Author Name"
-                android:textSize="20dp"
-                />
-
-            <TextView
-                android:id="@+id/pname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Publisher Name"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 />
 
             <TextView
                 android:id="@+id/bklink"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:textAlignment="center"
-                android:textColor="#3F51B5"
-                android:text="Link"
+                android:text="Description"
                 android:textStyle="bold"
-                android:textSize="14dp"
+                android:textSize="18dp"
                 />
+
+            <Spinner
+                android:id="@+id/dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:spinnerMode="dialog">
+
+            </Spinner>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

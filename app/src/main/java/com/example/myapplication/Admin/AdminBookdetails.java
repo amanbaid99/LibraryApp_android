@@ -35,6 +35,7 @@ public class AdminBookdetails extends AdminSearch {
     Bookdeets bookdeets;
     Button update, delete,addtotop,addtomain;
     ImageView imageView;
+    String id="tt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +52,49 @@ public class AdminBookdetails extends AdminSearch {
         bookid = (EditText) findViewById(R.id.uid);
         addtomain = (Button) findViewById(R.id.AddtoMain);
         bookdeets = new Bookdeets();
-        String id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
         String key = getIntent().getStringExtra("key");
 
 
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        String mtitle = getIntent().getStringExtra("booknames");
+        titles.setText("Book Name:"+mtitle);
+        String mauthor = getIntent().getStringExtra("author_name");
+        authors.setText("Author:"+mauthor);
+        String imgs = getIntent().getStringExtra("Image");
+        Imglnk.setText(imgs);
+        Picasso.get().load(imgs).into(imageView);
 
-        if(id.equals("bookdetails")){
 
-            databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
+if(id!=null) {
+    if (id.equals("bookdetails")) {
+
+        databaseReference.child("BookDB").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String bkid = dataSnapshot.child("id").getValue().toString();
+                bookid.setText(bkid);
+                String mtitle = dataSnapshot.child("bookname").getValue().toString();
+                titles.setText(mtitle);
+                String mauthor = dataSnapshot.child("author").getValue().toString();
+                authors.setText(mauthor);
+                String imglnk = dataSnapshot.child("image").getValue().toString();
+                Imglnk.setText(imglnk);
+                Picasso.get().load(imglnk).into(imageView);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    } else if (id.equals("tempbooks")) {
+        if (key != null) {
+            databaseReference.child("TempBookDB").child(key).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String bkid = dataSnapshot.child("id").getValue().toString();
@@ -74,7 +107,6 @@ public class AdminBookdetails extends AdminSearch {
                     Imglnk.setText(imglnk);
                     Picasso.get().load(imglnk).into(imageView);
 
-
                 }
 
                 @Override
@@ -83,31 +115,31 @@ public class AdminBookdetails extends AdminSearch {
                 }
             });
         }
+    } else {
+        databaseReference.child("BookDB").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String bkid = dataSnapshot.child("id").getValue().toString();
+                bookid.setText(bkid);
+                String mtitle = dataSnapshot.child("bookname").getValue().toString();
+                titles.setText(mtitle);
+                String mauthor = dataSnapshot.child("author").getValue().toString();
+                authors.setText(mauthor);
+                String imglnk = dataSnapshot.child("image").getValue().toString();
+                Imglnk.setText(imglnk);
+                Picasso.get().load(imglnk).into(imageView);
 
-        else if(id.equals("tempbooks")) {
-            if (key != null) {
-                databaseReference.child("TempBookDB").child(key).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String bkid = dataSnapshot.child("id").getValue().toString();
-                        bookid.setText(bkid);
-                        String mtitle = dataSnapshot.child("bookname").getValue().toString();
-                        titles.setText(mtitle);
-                        String mauthor = dataSnapshot.child("author").getValue().toString();
-                        authors.setText(mauthor);
-                        String imglnk = dataSnapshot.child("image").getValue().toString();
-                        Imglnk.setText(imglnk);
-                        Picasso.get().load(imglnk).into(imageView);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+}
+
+
         addtomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -52,6 +52,7 @@ public class MainActivity extends Login  {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
     FirebaseAuth fAuth;
+    String uid;
 
 
     @Override
@@ -66,19 +67,20 @@ public class MainActivity extends Login  {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         loading = (ProgressBar) findViewById(R.id.loading);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         navbar = (NavigationView) findViewById(R.id.drawer);
         navbar.bringToFront();
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         header = navbar.getHeaderView(0);
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(mtoggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
+        uid=getIntent().getStringExtra("ID");
         fAuth= FirebaseAuth.getInstance();
         final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference.child("BookDB"), Bookdeets.class).build();
+                .setQuery(reference.child("TopbooksDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
@@ -88,6 +90,7 @@ public class MainActivity extends Login  {
                     public void onClick(View v) {
                         final String key = getRef(position).getKey().toString();
                         Intent i = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
+                        i.putExtra("uid",uid);
                         i.putExtra("key", key);
                         startActivity(i);
                     }
