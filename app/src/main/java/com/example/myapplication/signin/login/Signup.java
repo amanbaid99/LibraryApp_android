@@ -146,7 +146,7 @@ public class Signup extends AppCompatActivity {
 
 
                 if(task.isSuccessful()){
-//                    uploadImage();
+
 
                     userdb.setFullName(Fullname.getText().toString().trim());
                     userdb.setNumber(phone.getText().toString().trim());
@@ -171,12 +171,7 @@ public class Signup extends AppCompatActivity {
 
 
     }
-    private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -195,48 +190,7 @@ public class Signup extends AppCompatActivity {
         }
     }
 
-    private void uploadImage() {
 
-        if(filePath != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
-                            userdb.setProfilrimg(downloadUri.toString());
-
-                            Toast.makeText(Signup.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(Signup.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
-
-
-
-
-    }
 
 
     }

@@ -56,8 +56,6 @@ public class AdminBookdetails extends AdminSearch {
         String key = getIntent().getStringExtra("key");
 
 
-
-
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         String mtitle = getIntent().getStringExtra("booknames");
         titles.setText("Book Name:"+mtitle);
@@ -83,16 +81,13 @@ if(id!=null) {
                 String imglnk = dataSnapshot.child("image").getValue().toString();
                 Imglnk.setText(imglnk);
                 Picasso.get().load(imglnk).into(imageView);
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-    } else if (id.equals("tempbooks")) {
+      }
+    else if (id.equals("tempbooks")) {
         if (key != null) {
             databaseReference.child("TempBookDB").child(key).addValueEventListener(new ValueEventListener() {
                 @Override

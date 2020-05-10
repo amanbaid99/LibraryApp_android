@@ -136,8 +136,6 @@ public class SearchPage extends AppCompatActivity {
 
 
 
-
-//                                    Toast.makeText(getApplicationContext(),"empty",Toast.LENGTH_LONG).show();
                                 }
                             }
                             catch (Exception e){
@@ -160,7 +158,6 @@ public class SearchPage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        Intent gob=new Intent(getApplicationContext(),MainActivity.class);
-//        startActivity(gob);
+
     }
     }

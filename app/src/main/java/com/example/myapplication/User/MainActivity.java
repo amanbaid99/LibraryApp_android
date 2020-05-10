@@ -133,8 +133,6 @@ public class MainActivity extends Login  {
                 }
                 else if(id== R.id.browse) {
                     Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
-//                    Intent h = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(h);
                 }
                 else if(id== R.id.search) {
 

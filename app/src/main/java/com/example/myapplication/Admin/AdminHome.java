@@ -31,6 +31,7 @@ import com.example.myapplication.signin.login.UserDB;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
@@ -42,18 +43,18 @@ public class AdminHome extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder> adapter;
     FirebaseRecyclerOptions<Bookdeets> options;
-    FirebaseRecyclerOptions<UserDB> useroptions;
-    FirebaseRecyclerAdapter<UserDB, Bkhomeholder> useradapter;
     ProgressBar loading;
     View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminhome);
+        fAuth=FirebaseAuth.getInstance();
         cardView = (CardView) findViewById(R.id.bookcardview);
         reference = FirebaseDatabase.getInstance().getReference();
         reference.keepSynced(true);
@@ -141,7 +142,7 @@ public class AdminHome extends AppCompatActivity {
                 }
 
                 else if(id== R.id.Logoutbtn) {
-//                    fAuth.signOut();
+                    fAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
                     finish();

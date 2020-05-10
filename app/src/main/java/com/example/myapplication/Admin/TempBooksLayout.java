@@ -144,7 +144,7 @@ public class TempBooksLayout extends AppCompatActivity {
                 }
 
                 else if(id== R.id.Logoutbtn) {
-//                    fAuth.signOut();
+                    fAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
                     finish();

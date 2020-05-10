@@ -115,8 +115,8 @@ public class Login extends AppCompatActivity {
                                     Intent sp = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
                                     sp.putExtra("ID", uid);
                                 Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-//                                Toast.makeText(Login.this, "Welcome " +name, Toast.LENGTH_SHORT).show();
-                            } else {
+                                }
+                                else {
                                 Toast.makeText(Login.this, "Error Logging In" + task.getException(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             }

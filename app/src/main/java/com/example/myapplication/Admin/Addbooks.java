@@ -43,8 +43,6 @@ public class Addbooks extends AppCompatActivity  implements
             public void onClick(View v) {
                 String Title = titles.getText().toString().trim();
                 String Author = authors.getText().toString().trim();
-//                String Link = linkss.getText().toString().trim();
-//                String Desc = descss.getText().toString().trim();
                 String Uid = bookid.getText().toString().trim();
                 String Img = Imglnk.getText().toString().trim();
 
@@ -52,7 +50,7 @@ public class Addbooks extends AppCompatActivity  implements
                 map.put("bookname", Title);
                 map.put("author", Author);
                 map.put("id", Uid);
-              map.put("image", Img);
+                map.put("image", Img);
                 if (uidcheck != null) {
 
                     if (uidcheck.equals("User")) {

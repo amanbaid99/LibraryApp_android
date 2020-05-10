@@ -82,7 +82,7 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
                 i.putExtra("booknames",BookNameLists.get(position));
                 i.putExtra("Image",PicLists.get(position));
                 i.putExtra("author_name",AuthorNameLists.get(position));
-//                i.putExtra("id","bookdetails");
+
 
                 c.startActivity(i);
             }

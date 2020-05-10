@@ -58,9 +58,7 @@ public class Profile extends Login {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String mname = dataSnapshot.child("fullName").getValue().toString();
                     Greetings.setText("Hello " + mname);
-//                    String Memail = dataSnapshot.child("email").getValue().toString();
-//                    Email.setText(Memail);
-////                        Picasso.get().load()
+
                 }
 
                 @Override
