@@ -7,7 +7,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,9 @@ public class Bookdetailslayouthome extends SearchPage {
     ActionBarDrawerToggle mtoggle1;
     String uid,key;
     DatabaseReference databaseReference;
+    RadioGroup radioGroup;
+    RadioButton rread,rreading,rtoread;
+    String bkname,authorname,bkid,bkimage;
 
 
 
@@ -47,10 +53,14 @@ public class Bookdetailslayouthome extends SearchPage {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookdetailslayout);
+
+        rread = (RadioButton) findViewById(R.id.radioread);
+        rreading = (RadioButton) findViewById(R.id.radioreading);
+        rtoread = (RadioButton) findViewById(R.id.radiotoread);
         image = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.bkname);
         author = (TextView) findViewById(R.id.aname);
-         databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         navbar1 = (NavigationView) findViewById(R.id.drawer);
         navbar1.bringToFront();
         drawerLayout1 = (DrawerLayout) findViewById(R.id.drawerlay);
@@ -61,35 +71,117 @@ public class Bookdetailslayouthome extends SearchPage {
         drawerLayout1.addDrawerListener(mtoggle1);
         mtoggle1.syncState();
         key = getIntent().getStringExtra("key");
-        uid=getIntent().getStringExtra("uid");
+        uid=getIntent().getStringExtra("ID");
+        Toast.makeText(this, ""+uid, Toast.LENGTH_SHORT).show();
+//        String readingcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(key).getKey();
+//        String readcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(key).getKey();
+//        String toreadcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(key).getKey();
+////
+//        if( readingcheck==key){
+//       rreading.setChecked(true);
+//        }
+//        else if(readcheck==key){
+//
+//            rread.setChecked(true);
+//        }
+//        else if(toreadcheck==key){
+//
+//            rtoread.setChecked(true);
+//        }
 
 
 //     retriving  from search  page
-        String mtitle = getIntent().getStringExtra("booknames");
+         final String mtitle = getIntent().getStringExtra("booknames");
             title.setText("Book Name:"+mtitle);
-            String mauthor = getIntent().getStringExtra("author_name");
-            author.setText("Author:"+mauthor);
-            String mimgs = getIntent().getStringExtra("Image");
+            bkname=mtitle;
+            final String mauthor = getIntent().getStringExtra("author_name");
+            author.setText("By Author:"+mauthor);
+            authorname=mauthor;
+            final String mimgs = getIntent().getStringExtra("Image");
             Picasso.get().load(mimgs).into(image);
+            bkimage=mimgs;
+
 
 
                if(key!=null) {
                    databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           String mtitle = dataSnapshot.child("bookname").getValue().toString();
+                          final String mtitle = dataSnapshot.child("bookname").getValue().toString();
+                          bkname=mtitle;
                            title.setText(mtitle);
                            String mauthor = dataSnapshot.child("author").getValue().toString();
+                           authorname=mauthor;
                            author.setText("by " + mauthor);
                            String mimgs = dataSnapshot.child("image").getValue().toString();
                            Picasso.get().load(mimgs).into(image);
+                           bkimage=mimgs;
                            String mid=dataSnapshot.child("id").getValue().toString();
+                           bkid=mid;
                        }
                        @Override
                        public void onCancelled(@NonNull DatabaseError databaseError) {
                        }
                    });
                }
+
+
+        rread.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+
+
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("bookname", bkname);
+                map.put("author", authorname);
+                map.put("id", bkid);
+                map.put("image", bkimage);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(map);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(null);
+
+
+            }
+        });
+        rreading.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+
+
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("bookname", bkname);
+                map.put("author", authorname);
+                map.put("id", bkid);
+                map.put("image", bkimage);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(map);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(null);
+                rreading.setChecked(true);
+
+
+            }
+        });
+
+        rtoread.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+
+
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("bookname", bkname);
+                map.put("author", authorname);
+                map.put("id", bkid);
+                map.put("image", bkimage);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(map);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(null);
+
+
+            }
+        });
                navbar1.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {

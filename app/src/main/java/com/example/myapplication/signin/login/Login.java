@@ -13,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Admin.AdminHome;
+import com.example.myapplication.User.Bookdetailslayouthome;
 import com.example.myapplication.User.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.User.SearchAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -52,8 +54,8 @@ public class Login extends AppCompatActivity {
                 OpenSignupPage();
             }
         });
-        emailid.setText("admin@admin.com");
-        password.setText("admin12345");
+        emailid.setText("amanbaid99@gmail.com");
+        password.setText("amanbaid99");
         final DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +112,10 @@ public class Login extends AppCompatActivity {
                                 Intent j = new Intent(getApplicationContext(), MainActivity.class);
                                 j.putExtra("ID", uid);
                                 startActivity(j);
+                                    Intent sp = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
+                                    sp.putExtra("ID", uid);
                                 Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-                                Toast.makeText(Login.this, "Welcome " +name, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Login.this, "Welcome " +name, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Login.this, "Error Logging In" + task.getException(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);

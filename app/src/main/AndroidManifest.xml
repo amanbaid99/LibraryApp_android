@@ -25,7 +25,12 @@
         <activity android:name=".User.Profile" />
         <activity android:name=".Admin.Addbooks" />
         <activity android:name=".Admin.AdminBookdetails" />
-        <activity android:name=".Admin.AdminSearch" >
+        <activity android:name=".Admin.AdminSearch" />
+
+        <activity android:name=".User.Bookdetailslayouthome" />
+        <activity android:name=".User.SearchPage" />
+        <activity android:name=".signin.login.Login" />
+        <activity android:name=".User.MainActivity" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".User.Bookdetailslayouthome" />
-        <activity android:name=".User.SearchPage" />
-        <activity android:name=".signin.login.Login" />
-        <activity android:name=".User.MainActivity" />
 
         <activity android:name=".signin.login.Signup"/>
 

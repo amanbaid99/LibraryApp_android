@@ -33,6 +33,15 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/bkid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAlignment="center"
+                android:text="Book ID"
+                android:textSize="24dp"
+                />
+            <TextView
                 android:id="@+id/bkname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,25 +59,39 @@
                 android:textSize="24dp"
                 />
 
-            <TextView
-                android:id="@+id/bklink"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:textAlignment="center"
-                android:text="Description"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                />
 
-            <Spinner
-                android:id="@+id/dropdown"
-                android:layout_width="match_parent"
+            <RadioGroup
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/radiogrp"
+                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:spinnerMode="dialog">
+                android:layout_marginTop="12dp">
 
-            </Spinner>
-        </LinearLayout>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="read"
+                   android:id="@+id/radioread"
+                    android:textSize="18dp"></RadioButton>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="reading"
+                    android:textSize="18dp"
+                    android:id="@+id/radioreading"></RadioButton>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="to read"
+                    android:textSize="18dp"
+                    android:id="@+id/radiotoread"></RadioButton>
+
+
+            </RadioGroup>
+
+
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
     <com.google.android.material.navigation.NavigationView

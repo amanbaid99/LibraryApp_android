@@ -40,12 +40,11 @@ public class SearchPage extends AppCompatActivity {
     ArrayList<String> BookNameList;
     ArrayList<String> AuthorNameList;
     ArrayList<String> PicList;
-    ArrayList<String> PublisherList;
-    ArrayList<String> LinkList;
-    ArrayList<String> DescriptionList;
+    ArrayList<String>IdList;
     FirebaseAnalytics mFirebaseAnalytics;
     ActionBarDrawerToggle mtoggle;
     DrawerLayout drawerLayout;
+
 
 
     @Override
@@ -63,11 +62,9 @@ public class SearchPage extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         BookNameList = new ArrayList<>();
-        PublisherList = new ArrayList<>();
         AuthorNameList = new ArrayList<>();
-        LinkList = new ArrayList<>();
         PicList = new ArrayList<>();
-        DescriptionList=new ArrayList<>();
+        IdList=new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         addbks.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +76,7 @@ public class SearchPage extends AppCompatActivity {
 
             }
         });
+
 
 
             searchbar.addTextChangedListener(new TextWatcher() {
@@ -97,8 +95,7 @@ public class SearchPage extends AppCompatActivity {
                     BookNameList.clear();
                     AuthorNameList.clear();
                     PicList.clear();
-                    PublisherList.clear();
-                    DescriptionList.clear();
+                    IdList.clear();
 
                 }
             }
@@ -111,8 +108,7 @@ public class SearchPage extends AppCompatActivity {
                         BookNameList.clear();
                         AuthorNameList.clear();
                         PicList.clear();
-                        PublisherList.clear();
-                        DescriptionList.clear();
+                        IdList.clear();
 
                         int counter=0;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
@@ -121,7 +117,7 @@ public class SearchPage extends AppCompatActivity {
                             String bookname = snapshot.child("bookname").getValue(String.class);
                             String author = snapshot.child("author").getValue(String.class);
                             String image = snapshot.child("image").getValue(String.class);
-                            String publisher = snapshot.child("Publisher").getValue(String.class);
+                            String bookid = snapshot.child("id").getValue(String.class);
 
 
                             try {
@@ -130,7 +126,7 @@ public class SearchPage extends AppCompatActivity {
 
                                     BookNameList.add(bookname);
                                     AuthorNameList.add(author);
-                                    PublisherList.add(publisher);
+                                    IdList.add(bookid);
                                     PicList.add(image);
 
                                     counter++;
@@ -149,7 +145,7 @@ public class SearchPage extends AppCompatActivity {
                             if(counter==15){
                                 break;
                             }
-                            SearchAdapter searchAdapter = new SearchAdapter(SearchPage.this, BookNameList, AuthorNameList, PicList, PublisherList,DescriptionList,LinkList);
+                            SearchAdapter searchAdapter = new SearchAdapter(SearchPage.this, BookNameList, AuthorNameList, PicList, IdList);
                             recyclerView.setAdapter(searchAdapter);
                         }
                     }
