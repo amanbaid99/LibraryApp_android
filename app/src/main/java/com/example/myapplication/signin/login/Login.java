@@ -2,6 +2,8 @@ package com.example.myapplication.signin.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends AppCompatActivity {
     EditText emailid,password;
     Button loginbtn;
-    TextView signupbtn,adminlgnbtn;
+    TextView signupbtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     public  String uid,name;

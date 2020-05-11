@@ -158,8 +158,7 @@ if(id!=null) {
                             if (task.isSuccessful()) {
                                 databaseReference.child("TempBookDB").child(Uid).setValue(null);
                                 Toast.makeText(AdminBookdetails.this, "Added to Main  Database Successfully", Toast.LENGTH_SHORT).show();
-                                Intent gb = new Intent(getApplicationContext(), AdminHome.class);
-                                startActivity(gb);
+
 
                             } else {
                                 Toast.makeText(AdminBookdetails.this, "Task failed try again", Toast.LENGTH_SHORT).show();
@@ -264,7 +263,11 @@ if(id!=null) {
                 public void onClick(View v) {
                     String Uid = bookid.getText().toString().trim();
                     databaseReference.child("BooksDB").child(Uid).setValue(null);
+                    databaseReference.child("TopBooksDB").child(Uid).setValue(null);
+                    databaseReference.child("TempBookDB").child(Uid).setValue(null);
                     Toast.makeText(getApplicationContext(), "Book deleted succesfully", Toast.LENGTH_SHORT).show();
+                    Intent gbck=new Intent(getApplicationContext(),TempBooksLayout.class);
+                    startActivity(gbck);
                 }
             });
         }

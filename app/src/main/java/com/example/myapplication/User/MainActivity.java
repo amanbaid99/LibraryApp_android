@@ -1,5 +1,6 @@
 package com.example.myapplication.User;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,7 @@ import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends Login  {
+public class MainActivity extends Login {
     public CardView cardView;
     RecyclerView recyclerView;
     DatabaseReference reference;

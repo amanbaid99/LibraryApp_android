@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Profile extends Login {
+public class Profile extends AppCompatActivity {
     View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;

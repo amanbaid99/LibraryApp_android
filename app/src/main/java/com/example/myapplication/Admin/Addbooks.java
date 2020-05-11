@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.myapplication.R;
@@ -18,15 +20,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
-public class Addbooks extends AppCompatActivity  implements
-        AdapterView.OnItemSelectedListener{
+public class Addbooks extends AppCompatActivity {
     Button Addbooks,refresh;
-    EditText titles,authors,pubs,linkss,descss,bookid,Imglnk;
+    EditText titles,authors,bookid,Imglnk;
     Bookdeets bookdeets;
+    RadioGroup radiobtn;
+    RadioButton Fiction,Nonficiton;
+    String Category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addbooks);
+
+
+        radiobtn=(RadioGroup) findViewById(R.id.radiobtn);
+        Fiction=(RadioButton) findViewById(R.id.ficiton);
+        Nonficiton=(RadioButton) findViewById(R.id.nonficiton);
         Addbooks=(Button)findViewById(R.id.addbkbtn);
         refresh=(Button)findViewById(R.id.ClearFeild);
         titles = (EditText) findViewById(R.id.bknames);
@@ -34,10 +43,21 @@ public class Addbooks extends AppCompatActivity  implements
         Imglnk=(EditText) findViewById(R.id.imglinks);
         bookid=(EditText)findViewById(R.id.uid);
         bookdeets=new Bookdeets();
-        Spinner spin;
-        String[] dpoptions = { "Fiction","Non-Fiction"};
         final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
         final String uidcheck=getIntent().getStringExtra("UID");
+        radiobtn.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(Fiction.isChecked()){
+                    Category="Fiction";
+
+
+                }
+                else if(Nonficiton.isChecked()){
+                   Category="Non-Fiction";
+                }
+            }
+        });
         Addbooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +71,7 @@ public class Addbooks extends AppCompatActivity  implements
                 map.put("author", Author);
                 map.put("id", Uid);
                 map.put("image", Img);
+                map.put("Category",Category);
                 if (uidcheck != null) {
 
                     if (uidcheck.equals("User")) {
@@ -82,19 +103,10 @@ public class Addbooks extends AppCompatActivity  implements
                 authors.setText(null);
                 bookid.setText(null);
                 Imglnk.setText(null);
-                descss.setText(null);
 
             }
         });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
