@@ -33,8 +33,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +53,7 @@ public class TempBooksLayout extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
     FirebaseAuth fAuth;
+    String Checker="notdefined";
 
 
     @Override
@@ -74,50 +78,86 @@ public class TempBooksLayout extends AppCompatActivity {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         fAuth= FirebaseAuth.getInstance();
+        reference.child("TempBookDB").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Checker="Exists";
+
+
+
+                }
+                  else {
+                    Checker="NotExists";
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        });
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
                 .setQuery(reference.child("TempBookDB"), Bookdeets.class).build();
-        adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final String key = getRef(position).getKey().toString();
-                        Toast.makeText(getApplicationContext(),""+key,Toast.LENGTH_LONG).show();
 
-                        Intent i = new Intent(getApplicationContext(), AdminBookdetails.class);
-                        i.putExtra("key", key);
-                        i.putExtra("id","tempbooks");
-                        startActivity(i);
-                    }
-                });
-                Picasso.get().load(model.getImage()).into(holder.bookimg, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loading.setVisibility(View.GONE);
-                    }
+        if(Checker.equals("Exists")) {
+            adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
+                @Override
+                protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
 
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(getApplicationContext(), "could not get the image", Toast.LENGTH_LONG).show();
-                        loading.setVisibility(View.GONE);
-                    }
-                });
-                holder.title.setText(model.getBookname());
-            }
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final String key = getRef(position).getKey().toString();
+                            Toast.makeText(getApplicationContext(), "" + key, Toast.LENGTH_LONG).show();
 
-            @NonNull
-            @Override
-            public Bkhomeholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewlay, parent, false);
-                return new Bkhomeholder(view);
-            }
-        };
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
+                            Intent i = new Intent(getApplicationContext(), AdminBookdetails.class);
+                            i.putExtra("key", key);
+                            i.putExtra("id", "tempbooks");
+                            startActivity(i);
+                        }
+                    });
+                    Picasso.get().load(model.getImage()).into(holder.bookimg, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            loading.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(getApplicationContext(), "could not get the image", Toast.LENGTH_LONG).show();
+                            loading.setVisibility(View.GONE);
+                        }
+                    });
+                    holder.title.setText(model.getBookname());
+                }
+
+                @NonNull
+                @Override
+                public Bkhomeholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewlay, parent, false);
+                    return new Bkhomeholder(view);
+                }
+            };
+
+
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            adapter.startListening();
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            Toast.makeText(this, "no books found in Temp Database", Toast.LENGTH_SHORT).show();
+            Intent goback=new Intent(getApplicationContext(),AdminHome.class);
+                startActivity(goback);
+
+
+        }
         navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -172,10 +212,14 @@ public class TempBooksLayout extends AppCompatActivity {
     }
     @Override
     protected void onStart() {
+
         super.onStart();
-        if (adapter != null)
+        if (adapter != null) {
             adapter.startListening();
-        loading.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.VISIBLE);
+
+        }
+
     }
     @Override
     protected void onStop() {
