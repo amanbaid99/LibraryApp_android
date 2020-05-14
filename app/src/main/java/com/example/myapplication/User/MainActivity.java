@@ -53,7 +53,7 @@ public class MainActivity extends Login {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mtoggle;
     FirebaseAuth fAuth;
-    String uid;
+
 
 
     @Override
@@ -77,11 +77,10 @@ public class MainActivity extends Login {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mtoggle.syncState();
-        uid=getIntent().getStringExtra("ID");
         fAuth= FirebaseAuth.getInstance();
-        final String UserId = getIntent().getStringExtra("ID");
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
                 .setQuery(reference.child("TopbooksDB"), Bookdeets.class).build();
+
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
@@ -91,7 +90,6 @@ public class MainActivity extends Login {
                     public void onClick(View v) {
                         final String key = getRef(position).getKey().toString();
                         Intent i = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
-                        i.putExtra("uid",uid);
                         i.putExtra("key", key);
                         i.putExtra("routing","Mainpage");
                         startActivity(i);
@@ -139,12 +137,10 @@ public class MainActivity extends Login {
                 else if(id== R.id.search) {
 
                     Intent search = new Intent(getApplicationContext(), SearchPage.class);
-                    search.putExtra("uid",uid);
                     startActivity(search);
                 }
                 else if(id== R.id.Profile) {
                     Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
-                    sendtopro.putExtra("Ukey",UserId);
                     startActivity(sendtopro);
                 }
                 else if(id== R.id.addbkbtn) {

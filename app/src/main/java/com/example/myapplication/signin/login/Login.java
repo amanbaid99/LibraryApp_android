@@ -3,8 +3,8 @@ package com.example.myapplication.signin.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,12 +18,10 @@ import com.example.myapplication.Admin.AdminHome;
 import com.example.myapplication.User.Bookdetailslayouthome;
 import com.example.myapplication.User.MainActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.User.SearchAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -103,6 +101,7 @@ public class Login extends AppCompatActivity {
 
                             if (task.isSuccessful() && uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
                                 Intent a = new Intent(getApplicationContext(), AdminHome.class);
+
                                 a.putExtra("ID", uid);
                                 startActivity(a);
                                 Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
@@ -111,6 +110,11 @@ public class Login extends AppCompatActivity {
                             }
 
                                 if (task.isSuccessful() && !uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
+                                    SharedPreferences sharedPref = getSharedPreferences("myKey", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putString("UserID", uid);
+                                    editor.apply();
+//                                    globalclass.Uid=uid;
                                 Intent j = new Intent(getApplicationContext(), MainActivity.class);
                                 j.putExtra("ID", uid);
                                 startActivity(j);

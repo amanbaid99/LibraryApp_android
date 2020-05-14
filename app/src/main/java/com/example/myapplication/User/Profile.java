@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,13 +48,14 @@ public class Profile extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         Greetings = (TextView) findViewById(R.id.greetings);
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("UserDB");
-        final String UserIdP = getIntent().getStringExtra("Ukey");
-        Toast.makeText(getApplicationContext(), "" + UserIdP, Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
+        String userID = sharedPreferences.getString("UserID","");
 
 
-        if (UserIdP != null) {
 
-            reff.child(UserIdP).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (userID != null) {
+
+            reff.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String mname = dataSnapshot.child("fullName").getValue().toString();

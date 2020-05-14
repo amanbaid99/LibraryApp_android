@@ -1,6 +1,7 @@
 package com.example.myapplication.User;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -72,12 +73,13 @@ public class Bookdetailslayouthome extends SearchPage {
         mtoggle1.syncState();
         routing=getIntent().getStringExtra("routing");
         key = getIntent().getStringExtra("key");
-        uid=getIntent().getStringExtra("ID");
+        SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
+        final String userID = sharedPreferences.getString("UserID","");
 
-//        String readingcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(key).getKey();
-//        String readcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(key).getKey();
-//        String toreadcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(key).getKey();
-////
+//        String readingcheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("reading").child(key).getKey();
+//        String readcheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("read").child(key).getKey();
+//        String toreadcheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("toread").child(key).getKey();
+//
 //        if( readingcheck==key){
 //       rreading.setChecked(true);
 //        }
@@ -139,14 +141,14 @@ else{
                 Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
 
 
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("bookname", bkname);
-                map.put("author", authorname);
-                map.put("id", bkid);
-                map.put("image", bkimage);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(map);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(null);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(null);
+                HashMap<String, Object> read = new HashMap<>();
+                read.put("bookname", bkname);
+                read.put("author", authorname);
+                read.put("id", bkid);
+                read.put("image", bkimage);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("read").child(bkid).setValue(read);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("reading").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("toread").child(bkid).setValue(null);
 
 
             }
@@ -154,18 +156,17 @@ else{
         rreading.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Bookdetailslayouthome.this, "reading", Toast.LENGTH_SHORT).show();
 
 
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("bookname", bkname);
-                map.put("author", authorname);
-                map.put("id", bkid);
-                map.put("image", bkimage);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(map);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(null);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(null);
-                rreading.setChecked(true);
+                HashMap<String, Object> reading = new HashMap<>();
+                reading.put("bookname", bkname);
+                reading.put("author", authorname);
+                reading.put("id", bkid);
+                reading.put("image", bkimage);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("reading").child(bkid).setValue(reading);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("read").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("toread").child(bkid).setValue(null);
 
 
             }
@@ -174,17 +175,17 @@ else{
         rtoread.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Bookdetailslayouthome.this, "to read", Toast.LENGTH_SHORT).show();
 
 
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("bookname", bkname);
-                map.put("author", authorname);
-                map.put("id", bkid);
-                map.put("image", bkimage);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(bkid).setValue(map);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(bkid).setValue(null);
-                databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(bkid).setValue(null);
+                HashMap<String, Object> toread = new HashMap<>();
+                toread.put("bookname", bkname);
+                toread.put("author", authorname);
+                toread.put("id", bkid);
+                toread.put("image", bkimage);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("toread").child(bkid).setValue(toread);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("read").child(bkid).setValue(null);
+                databaseReference.child("UserDB").child(userID).child("bookinfo").child("reading").child(bkid).setValue(null);
 
 
             }

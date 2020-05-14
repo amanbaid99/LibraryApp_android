@@ -154,7 +154,7 @@ public class Signup extends AppCompatActivity {
                     userdb.setUid(fAuth.getUid());
 
                     String uid=fAuth.getUid();
-                    databaseReference.child(uid).setValue(userdb);
+                    databaseReference.child(uid).child("userinfo").setValue(userdb);
 
 
 
