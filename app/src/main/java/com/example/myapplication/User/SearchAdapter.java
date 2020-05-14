@@ -86,6 +86,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                        i.putExtra("booknames",BookNameList.get(position));
                        i.putExtra("Image",PicList.get(position));
                        i.putExtra("author_name",AuthorNameList.get(position));
+                       i.putExtra("routing","searchpage");
                        context.startActivity(i);
                    }
                });

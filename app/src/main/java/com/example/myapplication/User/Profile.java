@@ -67,43 +67,46 @@ public class Profile extends AppCompatActivity {
                 }
             });
 
-            navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                    int id = item.getItemId();
-                    drawerLayout.closeDrawers();
-                    if (id == R.id.Profile) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                    }
-                    else if (id == R.id.browse) {
-                        Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG).show();
+        }
+        navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                int id = item.getItemId();
+                drawerLayout.closeDrawers();
+                if (id == R.id.Profile) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                else if (id == R.id.browse) {
+                    Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG).show();
 //                    Intent h = new Intent(getApplicationContext(), MainActivity.class);
 //                    startActivity(h);
-                    }
-                    else if (id == R.id.search) {
-                        Intent search = new Intent(getApplicationContext(), SearchPage.class);
-                        startActivity(search);
-                    }
-                    else if (id == R.id.home) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                    else if (id == R.id.Logoutbtn) {
-                        fAuth.signOut();
-                        Intent intent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    return true;
-
                 }
+                else if (id == R.id.search) {
+                    Intent search = new Intent(getApplicationContext(), SearchPage.class);
+                    startActivity(search);
+                }
+                else if (id == R.id.home) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else if (id == R.id.Logoutbtn) {
+                    fAuth.signOut();
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
 
-            });
-        }
+            }
+
+        });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mtoggle.onOptionsItemSelected(item)) {

@@ -41,7 +41,7 @@ public class Bookdetailslayouthome extends SearchPage {
     NavigationView navbar1;
     DrawerLayout drawerLayout1;
     ActionBarDrawerToggle mtoggle1;
-    String uid,key;
+    String uid,key,routing;
     DatabaseReference databaseReference;
     RadioGroup radioGroup;
     RadioButton rread,rreading,rtoread;
@@ -70,9 +70,10 @@ public class Bookdetailslayouthome extends SearchPage {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout1.addDrawerListener(mtoggle1);
         mtoggle1.syncState();
+        routing=getIntent().getStringExtra("routing");
         key = getIntent().getStringExtra("key");
         uid=getIntent().getStringExtra("ID");
-        Toast.makeText(this, ""+uid, Toast.LENGTH_SHORT).show();
+
 //        String readingcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("reading").child(key).getKey();
 //        String readcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("read").child(key).getKey();
 //        String toreadcheck=databaseReference.child("UserDB").child(uid).child("bookinfo").child("toread").child(key).getKey();
@@ -90,40 +91,46 @@ public class Bookdetailslayouthome extends SearchPage {
 //        }
 
 
-//     retriving  from search  page
-         final String mtitle = getIntent().getStringExtra("booknames");
-            title.setText("Book Name:"+mtitle);
-            bkname=mtitle;
-            final String mauthor = getIntent().getStringExtra("author_name");
-            author.setText("By Author:"+mauthor);
-            authorname=mauthor;
-            final String mimgs = getIntent().getStringExtra("Image");
-            Picasso.get().load(mimgs).into(image);
-            bkimage=mimgs;
+if(routing.equals("searchpage")) {
+    final String mtitle = getIntent().getStringExtra("booknames");
+    title.setText("Book Name:" + mtitle);
+    bkname = mtitle;
+    final String mauthor = getIntent().getStringExtra("author_name");
+    author.setText("By Author:" + mauthor);
+    authorname = mauthor;
+    final String mimgs = getIntent().getStringExtra("Image");
+    Picasso.get().load(mimgs).into(image);
+    bkimage = mimgs;
+}
+else if(routing.equals("Mainpage")) {
 
 
+    if (key != null) {
+        databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String mtitle = dataSnapshot.child("bookname").getValue().toString();
+                bkname = mtitle;
+                title.setText(mtitle);
+                String mauthor = dataSnapshot.child("author").getValue().toString();
+                authorname = mauthor;
+                author.setText("by " + mauthor);
+                String mimgs = dataSnapshot.child("image").getValue().toString();
+                Picasso.get().load(mimgs).into(image);
+                bkimage = mimgs;
+                String mid = dataSnapshot.child("id").getValue().toString();
+                bkid = mid;
+            }
 
-               if(key!=null) {
-                   databaseReference.child("TopbooksDB").child(key).addValueEventListener(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                          final String mtitle = dataSnapshot.child("bookname").getValue().toString();
-                          bkname=mtitle;
-                           title.setText(mtitle);
-                           String mauthor = dataSnapshot.child("author").getValue().toString();
-                           authorname=mauthor;
-                           author.setText("by " + mauthor);
-                           String mimgs = dataSnapshot.child("image").getValue().toString();
-                           Picasso.get().load(mimgs).into(image);
-                           bkimage=mimgs;
-                           String mid=dataSnapshot.child("id").getValue().toString();
-                           bkid=mid;
-                       }
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError databaseError) {
-                       }
-                   });
-               }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+}
+else{
+    Toast.makeText(this, "Can't Open the Book", Toast.LENGTH_SHORT).show();
+}
 
 
         rread.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

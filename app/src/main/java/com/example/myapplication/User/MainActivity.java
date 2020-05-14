@@ -93,6 +93,7 @@ public class MainActivity extends Login {
                         Intent i = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
                         i.putExtra("uid",uid);
                         i.putExtra("key", key);
+                        i.putExtra("routing","Mainpage");
                         startActivity(i);
                     }
                 });
