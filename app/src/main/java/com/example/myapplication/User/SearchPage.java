@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,10 @@ import android.widget.Toast;
 
 import com.example.myapplication.Admin.Addbooks;
 import com.example.myapplication.R;
+import com.example.myapplication.signin.login.Login;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,8 +46,11 @@ public class SearchPage extends AppCompatActivity {
     ArrayList<String> PicList;
     ArrayList<String>IdList;
     FirebaseAnalytics mFirebaseAnalytics;
-    ActionBarDrawerToggle mtoggle;
+    View header;
+    NavigationView navbar;
     DrawerLayout drawerLayout;
+    ActionBarDrawerToggle mtoggle;
+    FirebaseAuth fAuth;
 
 
 
@@ -51,6 +58,7 @@ public class SearchPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
+        fAuth=FirebaseAuth.getInstance();
         addbks=(TextView) findViewById(R.id.adbksearch);
         searchbar = (EditText) findViewById(R.id.searchbar);
         reference = FirebaseDatabase.getInstance().getReference();
@@ -65,8 +73,15 @@ public class SearchPage extends AppCompatActivity {
         AuthorNameList = new ArrayList<>();
         PicList = new ArrayList<>();
         IdList=new ArrayList<>();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
+        navbar = (NavigationView) findViewById(R.id.drawer);
+        navbar.bringToFront();
+        header = navbar.getHeaderView(0);
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(mtoggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoggle.syncState();
         addbks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,11 +168,65 @@ public class SearchPage extends AppCompatActivity {
                     }
                 });
             }
-        });    }
+        });
+        navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawers();
+
+                if(id== R.id.home) {
+                    Intent search = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(search);
+
+                }
+                else if(id== R.id.browse) {
+                    Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
+                }
+                else if(id== R.id.search) {
+
+                    drawerLayout.closeDrawer(GravityCompat.START);
+
+
+                }
+                else if(id== R.id.Profile) {
+                    Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
+//                    sendtopro.putExtra("Ukey",UserId);
+                    startActivity(sendtopro);
+                }
+                else if(id== R.id.addbkbtn) {
+
+                    Intent adbk = new Intent(getApplicationContext(), Addbooks.class);
+                    adbk.putExtra("UID","User");
+                    startActivity(adbk);
+                }
+                else if(id== R.id.Logoutbtn) {
+                    fAuth.signOut();
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
     }

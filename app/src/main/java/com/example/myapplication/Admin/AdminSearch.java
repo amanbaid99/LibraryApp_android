@@ -1,16 +1,28 @@
 package com.example.myapplication.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.myapplication.R;
+import com.example.myapplication.User.Profile;
+import com.example.myapplication.User.SearchPage;
+import com.example.myapplication.signin.login.Login;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +41,11 @@ public class AdminSearch extends AppCompatActivity {
     ArrayList<String> LinkLists;
     ArrayList<String> DescriptionLists;
     ArrayList<String>UidList;
+    View header;
+    NavigationView navbar;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle mtoggle;
+    FirebaseAuth fAuth;
 
 
     @Override
@@ -49,6 +66,16 @@ public class AdminSearch extends AppCompatActivity {
         PicLists = new ArrayList<>();
         DescriptionLists=new ArrayList<>();
         UidList=new ArrayList<>();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
+        navbar = (NavigationView) findViewById(R.id.drawer);
+        navbar.bringToFront();
+        header = navbar.getHeaderView(0);
+        mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(mtoggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoggle.syncState();
+        fAuth= FirebaseAuth.getInstance();
         searchbarr.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,5 +152,58 @@ public class AdminSearch extends AppCompatActivity {
                 });
             }
         });
+        navbar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawers();
+
+                if(id== R.id.home) {
+
+                    Intent search = new Intent(getApplicationContext(), AdminHome.class);
+                    startActivity(search);
+
+
+                }
+
+                else if(id== R.id.EditBooks) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+
+                }
+                else if(id== R.id.addbooksadmin) {
+                    Intent sendtopro=new Intent(getApplicationContext(), Addbooks.class);
+                    startActivity(sendtopro);
+                }
+                else if(id== R.id.tempdb) {
+
+                    Intent adbk = new Intent(getApplicationContext(), TempBooksLayout.class);
+                    startActivity(adbk);
+                }
+                else if(id== R.id.Logoutbtn) {
+                    fAuth.signOut();
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

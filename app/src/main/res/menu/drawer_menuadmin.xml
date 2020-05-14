@@ -13,7 +13,7 @@
         android:checkable="false"
         android:enabled="true"
         android:icon="@drawable/edit"
-        android:title="EditBooks" />
+        android:title="Search Books" />
     <item
         android:id="@+id/addbooksadmin"
         android:checkable="false"

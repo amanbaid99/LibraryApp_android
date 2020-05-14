@@ -137,9 +137,9 @@ public class MainActivity extends Login {
                 }
                 else if(id== R.id.search) {
 
-                     Intent search = new Intent(getApplicationContext(), SearchPage.class);
-                     search.putExtra("uid",uid);
-                startActivity(search);
+                    Intent search = new Intent(getApplicationContext(), SearchPage.class);
+                    search.putExtra("uid",uid);
+                    startActivity(search);
                 }
                 else if(id== R.id.Profile) {
                     Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
