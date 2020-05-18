@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication"
-   >
+    package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,33 +19,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".Admin.TempBooksLayout"></activity>
-        <activity android:name=".Admin.AdminHome"/>
-        <activity android:name=".User.Profile" />
-
-        <activity android:name=".Admin.Addbooks" />
-        <activity android:name=".Admin.AdminBookdetails" />
-        <activity android:name=".Admin.AdminSearch" />
-
-
-        <activity android:name=".User.Bookdetailslayouthome" />
-        <activity android:name=".User.SearchPage"/>
-
-        <activity android:name=".signin.login.Login" />
-
-        <activity android:name=".User.MainActivity">
+        <activity android:name=".Category.Category"></activity>
+        <activity android:name=".Admin.TempBooksLayout" />
+        <activity android:name=".Admin.AdminHome" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".User.Profile" />
+        <activity android:name=".Admin.Addbooks" />
+        <activity android:name=".Admin.AdminBookdetails" />
+        <activity android:name=".Admin.AdminSearch" />
+        <activity android:name=".User.Bookdetailslayouthome" />
+        <activity android:name=".User.SearchPage" />
+        <activity android:name=".signin.authentication.Login" />
+        <activity android:name=".User.MainActivity"/>
 
-
-
-
-        <activity android:name=".signin.login.Signup"/>
-
+        <activity android:name=".signin.authentication.Signup" />
     </application>
 
 </manifest>

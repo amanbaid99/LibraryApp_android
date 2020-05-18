@@ -1,4 +1,4 @@
-package com.example.myapplication.signin.login;
+package com.example.myapplication.signin.authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

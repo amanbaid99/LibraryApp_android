@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/Bookimg"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="75dp"
+        android:layout_height="85dp"
         android:padding="2dp"
         android:src="@mipmap/ic_launcher_round" />
 
@@ -28,6 +28,14 @@
 
 
         <TextView
+            android:id="@+id/BookID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ISBN"
+            android:textColor="#212121"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/BookName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,24 +45,22 @@
 
 
         <TextView
-            android:id="@+id/AuthorName"
+            android:id="@+id/BookAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Authorname" />
-
+            android:text="bookauthor"
+            android:textColor="#212121"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/Publications"
+            android:id="@+id/bookcategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Publisher" />
+            android:text="bookcategory"
+            android:textColor="#212121"
+            android:textSize="15sp" />
 
 
-        <TextView
-            android:id="@+id/Shelfno"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Shelfno" />
 
 
     </LinearLayout>

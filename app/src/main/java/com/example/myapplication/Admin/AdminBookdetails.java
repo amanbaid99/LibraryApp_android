@@ -31,7 +31,7 @@ import java.util.HashMap;
 import io.grpc.InternalWithLogId;
 
 public class AdminBookdetails extends AdminSearch {
-    EditText titles, authors, bookid, Imglnk;
+    EditText titles, authors, bookid, Imglnk,category;
     Bookdeets bookdeets;
     Button update, delete,addtotop,addtomain;
     ImageView imageView;
@@ -44,6 +44,7 @@ public class AdminBookdetails extends AdminSearch {
 
         imageView = (ImageView)findViewById(R.id.imgview);
         titles = (EditText) findViewById(R.id.bknames);
+        category = (EditText) findViewById(R.id.category);
         authors = (EditText) findViewById(R.id.anames);
         Imglnk = (EditText) findViewById(R.id.imglinks);
         update = (Button) findViewById(R.id.updatebtn);
@@ -57,10 +58,15 @@ public class AdminBookdetails extends AdminSearch {
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final String mid = getIntent().getStringExtra("bookid");
+        bookid.setText( mid);
+//        bkid = mid;
         String mtitle = getIntent().getStringExtra("booknames");
-        titles.setText("Book Name:"+mtitle);
+        titles.setText(mtitle);
+        final String mcategory = getIntent().getStringExtra("category");
+        category.setText(mcategory);
         String mauthor = getIntent().getStringExtra("author_name");
-        authors.setText("Author:"+mauthor);
+        authors.setText(mauthor);
         String imgs = getIntent().getStringExtra("Image");
         Imglnk.setText(imgs);
         Picasso.get().load(imgs).into(imageView);
@@ -78,6 +84,8 @@ if(id!=null) {
                 titles.setText(mtitle);
                 String mauthor = dataSnapshot.child("author").getValue().toString();
                 authors.setText(mauthor);
+                String mcategory = dataSnapshot.child("category").getValue().toString();
+                category.setText(mcategory);
                 String imglnk = dataSnapshot.child("image").getValue().toString();
                 Imglnk.setText(imglnk);
                 Picasso.get().load(imglnk).into(imageView);
@@ -98,6 +106,8 @@ if(id!=null) {
                     titles.setText(mtitle);
                     String mauthor = dataSnapshot.child("author").getValue().toString();
                     authors.setText(mauthor);
+                    String mcategory = dataSnapshot.child("category").getValue().toString();
+                    category.setText(mcategory);
                     String imglnk = dataSnapshot.child("image").getValue().toString();
                     Imglnk.setText(imglnk);
                     Picasso.get().load(imglnk).into(imageView);
@@ -120,6 +130,8 @@ if(id!=null) {
                 titles.setText(mtitle);
                 String mauthor = dataSnapshot.child("author").getValue().toString();
                 authors.setText(mauthor);
+                String mcategory = dataSnapshot.child("category").getValue().toString();
+                category.setText(mcategory);
                 String imglnk = dataSnapshot.child("image").getValue().toString();
                 Imglnk.setText(imglnk);
                 Picasso.get().load(imglnk).into(imageView);
@@ -142,17 +154,19 @@ if(id!=null) {
                 String Author = authors.getText().toString().trim();
                 final String Uid = bookid.getText().toString().trim();
                 String Img = Imglnk.getText().toString().trim();
+                String ccategory = category.getText().toString().trim();
 
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("bookname", Title);
                 map.put("author", Author);
                 map.put("id", Uid);
                 map.put("image", Img);
+                map.put("Category",ccategory);
                 if (databaseReference.child("BookDB").child(Uid).child("id").equals(Uid)) {
                     Toast.makeText(AdminBookdetails.this, "Book already exits", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    databaseReference.child("BookDB").child(Uid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    databaseReference.child("BookDB").child(Uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -188,14 +202,18 @@ if(id!=null) {
                     String Author = authors.getText().toString().trim();
                     String Uid = bookid.getText().toString().trim();
                     String Img = Imglnk.getText().toString().trim();
+                    String ccategory = category.getText().toString().trim();
+
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("bookname", Title);
                     map.put("author", Author);
                     map.put("id", Uid);
                     map.put("image", Img);
+                    map.put("Category",ccategory);
 
-                    databaseReference.child("BooksDB").child(Uid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    databaseReference.child("BookDB").child(Uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
@@ -225,19 +243,26 @@ if(id!=null) {
                     String Author = authors.getText().toString().trim();
                     String Uid = bookid.getText().toString().trim();
                     String Img = Imglnk.getText().toString().trim();
+                    String ccategory = category.getText().toString();
+
+
+
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("bookname", Title);
                     map.put("author", Author);
                     map.put("id", Uid);
                     map.put("image", Img);
+                    map.put("Category",ccategory);
+
+
 
                     if(databaseReference.child("TopBooksDB").equals(Uid)){
                         Toast.makeText(getApplicationContext(),"Book laready exists in Top Books database",Toast.LENGTH_LONG).show();
                     }
                     else {
 
-                        databaseReference.child("TopbooksDB").child(Uid).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        databaseReference.child("TopbooksDB").child(Uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){

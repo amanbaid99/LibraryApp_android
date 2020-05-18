@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     android:id="@+id/drawerlay"
     tools:context=".User.Bookdetailslayouthome"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+   >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="8dp">
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -58,6 +60,15 @@
                 android:text="Author Name"
                 android:textSize="24dp"
                 />
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Category"
+                android:textSize="24dp"
+                />
+
 
 
             <RadioGroup
@@ -71,21 +82,17 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="read"
-                   android:id="@+id/radioread"
-                    android:textSize="18dp"></RadioButton>
+                    android:text="Like"
+                   android:id="@+id/like"
+                    android:textSize="18dp"
+                    android:layout_marginEnd="50dp"></RadioButton>
                 <RadioButton
+                    android:layout_marginStart="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="reading"
+                    android:text="Dislike"
                     android:textSize="18dp"
-                    android:id="@+id/radioreading"></RadioButton>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="to read"
-                    android:textSize="18dp"
-                    android:id="@+id/radiotoread"></RadioButton>
+                    android:id="@+id/dislike"></RadioButton>
 
 
             </RadioGroup>

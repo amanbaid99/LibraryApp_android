@@ -1,7 +1,6 @@
 package com.example.myapplication.User;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -14,18 +13,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Admin.Addbooks;
 import com.example.myapplication.R;
-import com.example.myapplication.signin.login.Login;
+import com.example.myapplication.signin.authentication.Login;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +41,7 @@ public class SearchPage extends AppCompatActivity {
     ArrayList<String> AuthorNameList;
     ArrayList<String> PicList;
     ArrayList<String>IdList;
+    ArrayList<String>CategoryList;
     FirebaseAnalytics mFirebaseAnalytics;
     View header;
     NavigationView navbar;
@@ -73,6 +70,8 @@ public class SearchPage extends AppCompatActivity {
         AuthorNameList = new ArrayList<>();
         PicList = new ArrayList<>();
         IdList=new ArrayList<>();
+        CategoryList = new ArrayList<>();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         navbar = (NavigationView) findViewById(R.id.drawer);
         navbar.bringToFront();
@@ -111,6 +110,7 @@ public class SearchPage extends AppCompatActivity {
                     AuthorNameList.clear();
                     PicList.clear();
                     IdList.clear();
+                    CategoryList.clear();
 
                 }
             }
@@ -124,15 +124,16 @@ public class SearchPage extends AppCompatActivity {
                         AuthorNameList.clear();
                         PicList.clear();
                         IdList.clear();
+                        CategoryList.clear();
 
                         int counter=0;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                             String uid = snapshot.getKey();
-                            String desc = snapshot.child("Desc").getValue(String.class);
                             String bookname = snapshot.child("bookname").getValue(String.class);
                             String author = snapshot.child("author").getValue(String.class);
                             String image = snapshot.child("image").getValue(String.class);
                             String bookid = snapshot.child("id").getValue(String.class);
+                            String category=snapshot.child("Category").getValue(String.class);
 
 
                             try {
@@ -143,6 +144,7 @@ public class SearchPage extends AppCompatActivity {
                                     AuthorNameList.add(author);
                                     IdList.add(bookid);
                                     PicList.add(image);
+                                    CategoryList.add(category);
 
                                     counter++;
                                 }
@@ -158,7 +160,7 @@ public class SearchPage extends AppCompatActivity {
                             if(counter==15){
                                 break;
                             }
-                            SearchAdapter searchAdapter = new SearchAdapter(SearchPage.this, BookNameList, AuthorNameList, PicList, IdList);
+                            SearchAdapter searchAdapter = new SearchAdapter(SearchPage.this, BookNameList, AuthorNameList, PicList, IdList,CategoryList);
                             recyclerView.setAdapter(searchAdapter);
                         }
                     }

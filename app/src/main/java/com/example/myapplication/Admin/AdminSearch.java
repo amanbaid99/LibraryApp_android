@@ -18,9 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.myapplication.R;
-import com.example.myapplication.User.Profile;
-import com.example.myapplication.User.SearchPage;
-import com.example.myapplication.signin.login.Login;
+import com.example.myapplication.signin.authentication.Login;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,9 +35,6 @@ public class AdminSearch extends AppCompatActivity {
     ArrayList<String> BookNameLists;
     ArrayList<String> AuthorNameLists;
     ArrayList<String> PicLists;
-    ArrayList<String> PublisherLists;
-    ArrayList<String> LinkLists;
-    ArrayList<String> DescriptionLists;
     ArrayList<String>UidList;
     View header;
     NavigationView navbar;
@@ -60,11 +55,8 @@ public class AdminSearch extends AppCompatActivity {
         recyclerVieww.setLayoutManager(new LinearLayoutManager(this));
         recyclerVieww.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         BookNameLists = new ArrayList<>();
-        PublisherLists = new ArrayList<>();
         AuthorNameLists = new ArrayList<>();
-        LinkLists = new ArrayList<>();
         PicLists = new ArrayList<>();
-        DescriptionLists=new ArrayList<>();
         UidList=new ArrayList<>();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         navbar = (NavigationView) findViewById(R.id.drawer);
@@ -92,8 +84,6 @@ public class AdminSearch extends AppCompatActivity {
                     BookNameLists.clear();
                     AuthorNameLists.clear();
                     PicLists.clear();
-                    PublisherLists.clear();
-                    DescriptionLists.clear();
                     UidList.clear();
                 }
             }
@@ -105,31 +95,24 @@ public class AdminSearch extends AppCompatActivity {
                         BookNameLists.clear();
                         AuthorNameLists.clear();
                         PicLists.clear();
-                        PublisherLists.clear();
-                        DescriptionLists.clear();
                         UidList.clear();
 
                         int counter=0;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                            String uid = snapshot.getKey();
-                            String desc = snapshot.child("Desc").getValue(String.class);
                             String bookname = snapshot.child("bookname").getValue(String.class);
                             String author = snapshot.child("author").getValue(String.class);
                             String image = snapshot.child("image").getValue(String.class);
-                            String publisher = snapshot.child("Publisher").getValue(String.class);
-                            String link=snapshot.child("link").getValue(String.class);
-                            String decscription=snapshot.child("Desc").getValue(String.class);
+                            String id=snapshot.child("id").getValue(String.class);
+
 
                             try {
 
                                 if ((bookname.toLowerCase().contains(searchedString.toLowerCase())) || (author.toLowerCase().contains(searchedString.toLowerCase()))) {
-                                    UidList.add(uid);
                                     BookNameLists.add(bookname);
                                     AuthorNameLists.add(author);
-                                    PublisherLists.add(publisher);
                                     PicLists.add(image);
-                                    DescriptionLists.add(decscription);
-                                    LinkLists.add(link);
+                                    UidList.add(id);
+
                                     counter++;
                                 }
                                 if(BookNameLists.isEmpty() && AuthorNameLists.isEmpty()){
@@ -141,7 +124,7 @@ public class AdminSearch extends AppCompatActivity {
                             if(counter==15){
                                 break;
                             }
-                            AdminSearchAdapter adminSearchAdapter = new AdminSearchAdapter(AdminSearch.this, BookNameLists, AuthorNameLists, PicLists, PublisherLists,DescriptionLists,LinkLists,UidList);
+                            AdminSearchAdapter adminSearchAdapter = new AdminSearchAdapter(AdminSearch.this, BookNameLists, AuthorNameLists, PicLists,UidList);
                             recyclerVieww.setAdapter(adminSearchAdapter);
                         }
                     }

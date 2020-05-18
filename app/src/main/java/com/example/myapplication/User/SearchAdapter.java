@@ -25,6 +25,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     ArrayList<String> AuthorNameList;
     ArrayList<String> PicList;
     ArrayList<String>IdList;
+    ArrayList<String>CategoryList;
     LinearLayout booklayout;
     DatabaseReference reference;
     String uid;
@@ -32,14 +33,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     class SearchViewHolder extends RecyclerView.ViewHolder{
         ImageView bookimage;
-        TextView bookname, authorname,publisher,bookid;
+        TextView bookname, authorname,category,bookid;
 
 
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
+            bookid=itemView.findViewById(R.id.BookID);
+            category=itemView.findViewById(R.id.bookcategory);
             bookimage =  itemView.findViewById(R.id.Bookimg);
             bookname =  itemView.findViewById(R.id.BookName);
-            authorname =  itemView.findViewById(R.id.AuthorName);
+            authorname =  itemView.findViewById(R.id.BookAuthor);
             booklayout=itemView.findViewById(R.id.LinLayout);
             reference = FirebaseDatabase.getInstance().getReference();
             reference.keepSynced(true);
@@ -54,12 +57,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
 
-    public SearchAdapter(Context context, ArrayList<String> bookNameList, ArrayList<String> authorNameList, ArrayList<String> picList, ArrayList<String> idList) {
+    public SearchAdapter(Context context, ArrayList<String> bookNameList, ArrayList<String> authorNameList, ArrayList<String> picList, ArrayList<String> idList,ArrayList<String> categoryList) {
         this.context = context;
         BookNameList = bookNameList;
         AuthorNameList = authorNameList;
         PicList = picList;
         IdList=idList;
+        CategoryList=categoryList;
+
 
 
     }
@@ -77,7 +82,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         holder.bookname.setText(BookNameList.get(position));
         holder.authorname.setText(AuthorNameList.get(position));
-;       holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.bookid.setText(IdList.get(position));
+        holder.category.setText(CategoryList.get(position));
+
+        ;       holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
 
@@ -87,6 +95,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                        i.putExtra("booknames",BookNameList.get(position));
                        i.putExtra("Image",PicList.get(position));
                        i.putExtra("author_name",AuthorNameList.get(position));
+                       i.putExtra("category",CategoryList.get(position));
                        i.putExtra("routing","searchpage");
                        context.startActivity(i);
                    }

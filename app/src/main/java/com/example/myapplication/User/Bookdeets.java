@@ -5,22 +5,18 @@ public class Bookdeets {
     private String bookname;
     private String image;
     private String author;
-    private String Publisher;
-    private String link;
-    private String Desc;
     private String id;
+    private String category;
 
     public Bookdeets() {
     }
 
-    public Bookdeets(String bookname, String image, String author, String publisher, String link, String desc, String id) {
+    public Bookdeets(String bookname, String image, String author, String publisher, String link, String desc, String id,String category) {
         this.bookname = bookname;
         this.image = image;
         this.author = author;
-        Publisher = publisher;
-        this.link = link;
-        Desc = desc;
         this.id = id;
+        this.category=category;
     }
 
     public String getBookname() {
@@ -47,29 +43,14 @@ public class Bookdeets {
         this.author = author;
     }
 
-    public String getPublisher() {
-        return Publisher;
+    public String getCategory() {
+        return category;
     }
 
-    public void setPublisher(String publisher) {
-        Publisher = publisher;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getDesc() {
-        return Desc;
-    }
-
-    public void setDesc(String desc) {
-        Desc = desc;
-    }
 
     public String getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.example.myapplication.signin.login;
+package com.example.myapplication.signin.authentication;
 
 public class UserDB {
     private String FullName;

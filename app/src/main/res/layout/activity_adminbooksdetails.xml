@@ -28,7 +28,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:textAlignment="center"
-            android:text="Book ID"
+            android:hint="Book ID"
             android:textSize="20dp"
             />
         <EditText
@@ -37,7 +37,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textAlignment="center"
-            android:text="Book Name"
+            android:hint="Book Name"
             android:textSize="20dp"
             />
         <EditText
@@ -45,7 +45,16 @@ android:orientation="vertical">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Author Name"
+            android:hint="Author Name"
+            android:textSize="16dp"
+            />
+
+        <EditText
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="Category"
             android:textSize="16dp"
             />
 
@@ -54,7 +63,7 @@ android:orientation="vertical">
             android:id="@+id/imglinks"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="imglink"
+            android:hint="imglink"
             android:textSize="12dp"
             android:scrollbars="vertical"
             />
