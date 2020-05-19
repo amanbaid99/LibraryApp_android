@@ -21,7 +21,15 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity android:name=".Category.Category"></activity>
         <activity android:name=".Admin.TempBooksLayout" />
-        <activity android:name=".Admin.AdminHome" />
+        <activity android:name=".Admin.AdminHome" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
 
         <activity android:name=".User.Profile" />
         <activity android:name=".Admin.Addbooks" />
@@ -32,14 +40,7 @@
         <activity android:name=".signin.authentication.Login" />
 
 
-        <activity android:name=".User.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".User.MainActivity"/>
 
 
 

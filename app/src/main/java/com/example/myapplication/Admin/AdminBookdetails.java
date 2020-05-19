@@ -31,7 +31,7 @@ import java.util.HashMap;
 import io.grpc.InternalWithLogId;
 
 public class AdminBookdetails extends AdminSearch {
-    EditText titles, authors, bookid, Imglnk,category;
+    EditText titles, authors, bookid, Imglnk,category,isbn;
     Bookdeets bookdeets;
     Button update, delete,addtotop,addtomain;
     ImageView imageView;
@@ -46,6 +46,7 @@ public class AdminBookdetails extends AdminSearch {
         titles = (EditText) findViewById(R.id.bknames);
         category = (EditText) findViewById(R.id.category);
         authors = (EditText) findViewById(R.id.anames);
+        isbn = (EditText) findViewById(R.id.isbn);
         Imglnk = (EditText) findViewById(R.id.imglinks);
         update = (Button) findViewById(R.id.updatebtn);
         addtotop = (Button) findViewById(R.id.AddToTopBooks);
@@ -80,11 +81,13 @@ if(id!=null) {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String bkid = dataSnapshot.child("id").getValue().toString();
                 bookid.setText(bkid);
+                String iisbn = dataSnapshot.child("ISBN").getValue().toString();
+                isbn.setText(iisbn);
                 String mtitle = dataSnapshot.child("bookname").getValue().toString();
                 titles.setText(mtitle);
                 String mauthor = dataSnapshot.child("author").getValue().toString();
                 authors.setText(mauthor);
-                String mcategory = dataSnapshot.child("category").getValue().toString();
+                String mcategory = dataSnapshot.child("Category").getValue().toString();
                 category.setText(mcategory);
                 String imglnk = dataSnapshot.child("image").getValue().toString();
                 Imglnk.setText(imglnk);
@@ -203,6 +206,7 @@ if(id!=null) {
                     String Uid = bookid.getText().toString().trim();
                     String Img = Imglnk.getText().toString().trim();
                     String ccategory = category.getText().toString().trim();
+                    String issbn=isbn.getText().toString().trim();
 
 
                     HashMap<String, Object> map = new HashMap<>();
@@ -211,6 +215,7 @@ if(id!=null) {
                     map.put("id", Uid);
                     map.put("image", Img);
                     map.put("Category",ccategory);
+                    map.put("ISBN",issbn);
 
 
                     databaseReference.child("BookDB").child(Uid).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

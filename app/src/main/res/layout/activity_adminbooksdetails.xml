@@ -32,6 +32,15 @@ android:orientation="vertical">
             android:textSize="20dp"
             />
         <EditText
+            android:id="@+id/isbn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:textAlignment="center"
+            android:hint="ISBN"
+            android:textSize="20dp"
+            />
+        <EditText
             android:id="@+id/bknames"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
