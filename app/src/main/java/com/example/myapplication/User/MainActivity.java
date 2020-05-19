@@ -77,7 +77,7 @@ public class MainActivity extends Login {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String key = getRef(position).getKey().toString();
+                        final String key = getRef(position).getKey();
                         Intent i = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
                         i.putExtra("key", key);
                         i.putExtra("routing","Mainpage");

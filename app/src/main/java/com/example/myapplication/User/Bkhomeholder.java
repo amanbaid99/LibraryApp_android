@@ -13,7 +13,7 @@ import com.example.myapplication.R;
 
 
 public class Bkhomeholder extends RecyclerView.ViewHolder {
-    public TextView title,name;
+    public TextView title;
     public ImageView bookimg;
     public CardView cardView;
 

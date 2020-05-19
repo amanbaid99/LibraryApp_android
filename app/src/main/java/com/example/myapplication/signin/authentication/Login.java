@@ -56,11 +56,11 @@ public class Login extends AppCompatActivity {
         });
         emailid.setText("amanbaid99@gmail.com");
         password.setText("amanbaid99");
-        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String EmailID = emailid.getText().toString().toLowerCase().trim();
+                 String EmailID = emailid.getText().toString().toLowerCase().trim();
                 String Password = password.getText().toString().trim();
 
                 if (TextUtils.isEmpty(EmailID)) {
@@ -83,25 +83,10 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             uid = fAuth.getUid();
-                            if(!uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
-                                reference.child("UserDB").child(uid).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        name = dataSnapshot.child("fullName").getValue().toString();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-
-
+                            Toast.makeText(Login.this, ""+uid, Toast.LENGTH_SHORT).show();
 
                             if (task.isSuccessful() && uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
                                 Intent a = new Intent(getApplicationContext(), AdminHome.class);
-
                                 a.putExtra("ID", uid);
                                 startActivity(a);
                                 Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
@@ -109,18 +94,15 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Welcome Admin", Toast.LENGTH_SHORT).show();
                             }
 
-                                if (task.isSuccessful() && !uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
+                               else if (task.isSuccessful() && !uid.equals("3NWkxnHIGFeLyWOC5bjN2QGmxgs2")) {
                                     SharedPreferences sharedPref = getSharedPreferences("myKey", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPref.edit();
                                     editor.putString("UserID", uid);
                                     editor.apply();
-//                                    globalclass.Uid=uid;
+//
                                 Intent j = new Intent(getApplicationContext(), MainActivity.class);
-                                j.putExtra("ID", uid);
                                 startActivity(j);
-                                    Intent sp = new Intent(getApplicationContext(), Bookdetailslayouthome.class);
-                                    sp.putExtra("ID", uid);
-                                Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(Login.this, "Login Successfull" , Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                 Toast.makeText(Login.this, "Error Logging In" + task.getException(), Toast.LENGTH_SHORT).show();

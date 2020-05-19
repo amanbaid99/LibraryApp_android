@@ -2,7 +2,9 @@ package com.example.myapplication.User;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -32,7 +34,7 @@ import java.util.HashMap;
 public class Bookdetailslayouthome extends SearchPage {
 
 
-    TextView title, author, bookid,Category;
+    TextView title, author, bookid,Category,Link;
     ImageView image;
     View header;
     NavigationView navbar1;
@@ -40,8 +42,8 @@ public class Bookdetailslayouthome extends SearchPage {
     ActionBarDrawerToggle mtoggle1;
     String key,routing;
     DatabaseReference databaseReference;
-    RadioButton like,dislike;
-    String bkname,authorname,bkid,bkimage,category;
+//    RadioButton like,dislike;
+    String bkname,authorname,isbn,bkimage,category,link;
 
 
 
@@ -50,13 +52,13 @@ public class Bookdetailslayouthome extends SearchPage {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookdetailslayout);
 
-        dislike = (RadioButton) findViewById(R.id.like);
-        like = (RadioButton) findViewById(R.id.dislike);
+//        dislike = (RadioButton) findViewById(R.id.like);
+//        like = (RadioButton) findViewById(R.id.dislike);
         image = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.bkname);
         Category = (TextView) findViewById(R.id.category);
         bookid = (TextView) findViewById(R.id.bkid);
-
+        Link=(TextView)findViewById(R.id.Link);
         author = (TextView) findViewById(R.id.aname);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         navbar1 = (NavigationView) findViewById(R.id.drawer);
@@ -73,20 +75,20 @@ public class Bookdetailslayouthome extends SearchPage {
         SharedPreferences sharedPreferences = getSharedPreferences("myKey", MODE_PRIVATE);
         final String userID = sharedPreferences.getString("UserID","");
 
-        String likecheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(key).getKey();
-        String dislikecheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("Disliked").child(key).getKey();
-
-        if( likecheck==key){
-       like.setChecked(true);
-        }
-        else if(dislikecheck==key){
-
-            dislike.setChecked(true);
-        }
-        else{
-
-        }
-
+//        String likecheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(key).getKey();
+//        String dislikecheck=databaseReference.child("UserDB").child(userID).child("bookinfo").child("Disliked").child(key).getKey();
+//
+//        if( likecheck==key){
+//       like.setChecked(true);
+//        }
+//        else if(dislikecheck==key){
+//
+//            dislike.setChecked(true);
+//        }
+//        else{
+//
+//        }
+//
 
 
 if(routing.equals("searchpage")) {
@@ -102,7 +104,7 @@ if(routing.equals("searchpage")) {
 
     final String mid = getIntent().getStringExtra("key");
     bookid.setText("ISBN "+mid);
-    bkid = mid;
+    isbn = mid;
     final String mimgs = getIntent().getStringExtra("Image");
     Picasso.get().load(mimgs).into(image);
     bkimage = mimgs;
@@ -123,12 +125,22 @@ else if(routing.equals("Mainpage")) {
                 String mimgs = dataSnapshot.child("image").getValue().toString();
                 Picasso.get().load(mimgs).into(image);
                 bkimage = mimgs;
-                String mid = dataSnapshot.child("id").getValue().toString();
-                bookid.setText("BookID"+mid);
-                bkid = mid;
+                String misbn = dataSnapshot.child("ISBN").getValue().toString();
+                bookid.setText("ISBN: "+misbn);
+                isbn = misbn;
                 String mcategory = dataSnapshot.child("Category").getValue().toString();
-                bookid.setText(mcategory);
+                Category.setText(mcategory);
                 category = mcategory;
+                final String llink="https://www.amazon.in/s?k="+misbn+"&ref=nb_sb_noss";
+                Link.setText("Amazon Link");
+                link=llink;
+                Link.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent link=new Intent(Intent.ACTION_VIEW, Uri.parse(llink));
+                        startActivity(link);
+                    }
+                });
             }
 
             @Override
@@ -142,44 +154,44 @@ else{
 }
 
 
-        like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
-
-
-                HashMap<String, Object> read = new HashMap<>();
-                read.put("bookname", bkname);
-                read.put("author", authorname);
-                read.put("id", bkid);
-                read.put("image", bkimage);
-                read.put("Category",category);
-                databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(bkid).setValue(read);
-                databaseReference.child("UserDB").child(userID).child("bookinfo").child("disliked").child(bkid).setValue(null);
-
-
-            }
-        });
-        dislike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(Bookdetailslayouthome.this, "reading", Toast.LENGTH_SHORT).show();
-
-
-                HashMap<String, Object> reading = new HashMap<>();
-                reading.put("bookname", bkname);
-                reading.put("author", authorname);
-                reading.put("id", bkid);
-                reading.put("image", bkimage);
-                reading.put("Category",category);
-                databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(bkid).setValue(null);
-                databaseReference.child("UserDB").child(userID).child("bookinfo").child("disliked").child(bkid).setValue(reading);
-
-
-
-            }
-        });
-
+//        like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                Toast.makeText(Bookdetailslayouthome.this, "read", Toast.LENGTH_SHORT).show();
+//
+//
+//                HashMap<String, Object> read = new HashMap<>();
+//                read.put("bookname", bkname);
+//                read.put("author", authorname);
+//                read.put("id", bkid);
+//                read.put("image", bkimage);
+//                read.put("Category",category);
+//                databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(bkid).setValue(read);
+//                databaseReference.child("UserDB").child(userID).child("bookinfo").child("disliked").child(bkid).setValue(null);
+//
+//
+//            }
+//        });
+//        dislike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                Toast.makeText(Bookdetailslayouthome.this, "reading", Toast.LENGTH_SHORT).show();
+//
+//
+//                HashMap<String, Object> reading = new HashMap<>();
+//                reading.put("bookname", bkname);
+//                reading.put("author", authorname);
+//                reading.put("id", bkid);
+//                reading.put("image", bkimage);
+//                reading.put("Category",category);
+//                databaseReference.child("UserDB").child(userID).child("bookinfo").child("liked").child(bkid).setValue(null);
+//                databaseReference.child("UserDB").child(userID).child("bookinfo").child("disliked").child(bkid).setValue(reading);
+//
+//
+//
+//            }
+//        });
+//
 
                navbar1.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
