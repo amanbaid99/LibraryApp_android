@@ -24,8 +24,9 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
     ArrayList<String> BookNameLists;
     ArrayList<String> AuthorNameLists;
     ArrayList<String> PicLists;
+    ArrayList<String> CategoryList;
     LinearLayout booklayoutt;
-    ArrayList<String>UidList;
+    ArrayList<String>IsbnList;
     FirebaseDatabase db;
 
     DatabaseReference referencee;
@@ -48,12 +49,13 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
         }
     }
 
-    public AdminSearchAdapter(Context c1, ArrayList<String> bookNameLists, ArrayList<String> authorNameLists, ArrayList<String> picLists,ArrayList<String> uidList) {
+    public AdminSearchAdapter(Context c1, ArrayList<String> bookNameLists, ArrayList<String> authorNameLists, ArrayList<String> picLists,ArrayList<String> isbnList,ArrayList<String> categoryList) {
         c = c1;
         BookNameLists = bookNameLists;
         AuthorNameLists = authorNameLists;
         PicLists = picLists;
-        UidList=uidList;
+        IsbnList=isbnList;
+        CategoryList=categoryList;
     }
     @NonNull
     @Override
@@ -65,6 +67,8 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
     public void onBindViewHolder(@NonNull final EditViewHolder holder, final int position) {
         holder.booknamess.setText(BookNameLists.get(position));
         holder.authornamess.setText(AuthorNameLists.get(position));
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +77,8 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
                 i.putExtra("booknames",BookNameLists.get(position));
                 i.putExtra("Image",PicLists.get(position));
                 i.putExtra("author_name",AuthorNameLists.get(position));
-                i.putExtra("bookid",UidList.get(position));
+                i.putExtra("isbn",IsbnList.get(position));
+                i.putExtra("category",CategoryList.get(position));
 
 
                 c.startActivity(i);

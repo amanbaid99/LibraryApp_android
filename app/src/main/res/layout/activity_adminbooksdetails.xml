@@ -22,15 +22,7 @@ android:orientation="vertical">
             android:src="@drawable/category"
             ></ImageView>
 
-        <EditText
-            android:id="@+id/uid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:textAlignment="center"
-            android:hint="Book ID"
-            android:textSize="20dp"
-            />
+
         <EditText
             android:id="@+id/isbn"
             android:layout_width="match_parent"
@@ -110,15 +102,6 @@ android:orientation="vertical">
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <Button android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Add to Top Books"
-            android:layout_marginTop="18dp"
-            android:layout_marginStart="125dp"
-            android:id="@+id/AddToTopBooks"
-
-            />
-
 
 
     </LinearLayout>

@@ -33,9 +33,10 @@ public class AdminSearch extends AppCompatActivity {
     RecyclerView recyclerVieww;
     DatabaseReference referencee;
     ArrayList<String> BookNameLists;
+    ArrayList<String> CategoryList;
     ArrayList<String> AuthorNameLists;
     ArrayList<String> PicLists;
-    ArrayList<String>UidList;
+    ArrayList<String>IsbnList;
     View header;
     NavigationView navbar;
     DrawerLayout drawerLayout;
@@ -56,8 +57,9 @@ public class AdminSearch extends AppCompatActivity {
         recyclerVieww.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         BookNameLists = new ArrayList<>();
         AuthorNameLists = new ArrayList<>();
+        CategoryList = new ArrayList<>();
         PicLists = new ArrayList<>();
-        UidList=new ArrayList<>();
+        IsbnList=new ArrayList<>();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlay);
         navbar = (NavigationView) findViewById(R.id.drawer);
         navbar.bringToFront();
@@ -84,7 +86,9 @@ public class AdminSearch extends AppCompatActivity {
                     BookNameLists.clear();
                     AuthorNameLists.clear();
                     PicLists.clear();
-                    UidList.clear();
+                    IsbnList.clear();
+                    CategoryList.clear();
+
                 }
             }
 
@@ -95,14 +99,17 @@ public class AdminSearch extends AppCompatActivity {
                         BookNameLists.clear();
                         AuthorNameLists.clear();
                         PicLists.clear();
-                        UidList.clear();
+                        IsbnList.clear();
+                        CategoryList.clear();
 
                         int counter=0;
                         for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                             String bookname = snapshot.child("bookname").getValue(String.class);
                             String author = snapshot.child("author").getValue(String.class);
                             String image = snapshot.child("image").getValue(String.class);
-                            String id=snapshot.child("id").getValue(String.class);
+                            String isbn=snapshot.child("ISBN").getValue(String.class);
+                            String category=snapshot.child("Category").getValue(String.class);
+
 
 
                             try {
@@ -111,7 +118,8 @@ public class AdminSearch extends AppCompatActivity {
                                     BookNameLists.add(bookname);
                                     AuthorNameLists.add(author);
                                     PicLists.add(image);
-                                    UidList.add(id);
+                                    IsbnList.add(isbn);
+                                    CategoryList.add(category);
 
                                     counter++;
                                 }
@@ -124,7 +132,7 @@ public class AdminSearch extends AppCompatActivity {
                             if(counter==15){
                                 break;
                             }
-                            AdminSearchAdapter adminSearchAdapter = new AdminSearchAdapter(AdminSearch.this, BookNameLists, AuthorNameLists, PicLists,UidList);
+                            AdminSearchAdapter adminSearchAdapter = new AdminSearchAdapter(AdminSearch.this, BookNameLists, AuthorNameLists, PicLists,IsbnList,CategoryList);
                             recyclerVieww.setAdapter(adminSearchAdapter);
                         }
                     }

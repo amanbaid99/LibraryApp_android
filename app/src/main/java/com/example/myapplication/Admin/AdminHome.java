@@ -69,7 +69,7 @@ public class AdminHome extends AppCompatActivity {
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference.child("TopbooksDB"), Bookdeets.class).build();
+                .setQuery(reference.child("BookDB"), Bookdeets.class).build();
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bkhomeholder holder, final int position, @NonNull Bookdeets model) {
