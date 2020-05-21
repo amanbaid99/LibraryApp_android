@@ -102,12 +102,22 @@ if(routing.equals("searchpage")) {
     Category.setText(mcategory);
     category = mcategory;
 
-    final String mid = getIntent().getStringExtra("key");
-    bookid.setText("ISBN "+mid);
-    isbn = mid;
+    final String misbn = getIntent().getStringExtra("key");
+    bookid.setText("ISBN "+misbn);
+    isbn = misbn;
     final String mimgs = getIntent().getStringExtra("Image");
     Picasso.get().load(mimgs).into(image);
     bkimage = mimgs;
+    final String llink="https://www.amazon.in/s?k="+misbn+"&ref=nb_sb_noss";
+    Link.setText("Amazon Link");
+    link=llink;
+    Link.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent link=new Intent(Intent.ACTION_VIEW, Uri.parse(llink));
+            startActivity(link);
+        }
+    });
 }
 else if(routing.equals("Mainpage")) {
 
