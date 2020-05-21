@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class Addbooks extends AppCompatActivity {
     Button Addbooks,refresh;
-    EditText titles,authors,bookid,Imglnk;
+    EditText titles,authors,ISBN,Imglnk;
     Bookdeets bookdeets;
     RadioGroup radiobtn;
     RadioButton Fiction,Nonficiton;
@@ -41,7 +41,7 @@ public class Addbooks extends AppCompatActivity {
         titles = (EditText) findViewById(R.id.bknames);
         authors = (EditText) findViewById(R.id.anames);
         Imglnk=(EditText) findViewById(R.id.imglinks);
-        bookid=(EditText)findViewById(R.id.uid);
+        ISBN=(EditText)findViewById(R.id.uid);
         bookdeets=new Bookdeets();
         final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
         final String uidcheck=getIntent().getStringExtra("UID");
@@ -61,39 +61,44 @@ public class Addbooks extends AppCompatActivity {
         Addbooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Title = titles.getText().toString().trim();
-                String Author = authors.getText().toString().trim();
-                String Uid = bookid.getText().toString().trim();
-                String Img = Imglnk.getText().toString().trim();
 
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("bookname", Title);
-                map.put("author", Author);
-                map.put("id", Uid);
-                map.put("image", Img);
-                map.put("Category",Category);
-                if (uidcheck != null) {
 
-                    if (uidcheck.equals("User")) {
-                        databaseReference.child("TempBookDB").child(Uid).setValue(map);
-                        Toast.makeText(getApplicationContext(), "Book Added succesfully to temp DataBase", Toast.LENGTH_SHORT).show();
-                        Intent gb = new Intent(getApplicationContext(), MainActivity.class);
+
+                    String Title = titles.getText().toString().trim();
+                    String Author = authors.getText().toString().trim();
+                    String isbn = ISBN.getText().toString().trim();
+                    String Img = Imglnk.getText().toString().trim();
+
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("bookname", Title);
+                    map.put("author", Author);
+                    map.put("ISBN", isbn);
+                    map.put("image", Img);
+                    map.put("Category", Category);
+                    if (uidcheck != null) {
+
+                        if (uidcheck.equals("User")) {
+                            databaseReference.child("TempBookDB").child(isbn).setValue(map);
+                            Toast.makeText(getApplicationContext(), "Book Added succesfully to temp DataBase", Toast.LENGTH_SHORT).show();
+                            Intent gb = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(gb);
+
+
+                        }
+                    } else {
+
+
+                        databaseReference.child("BookDB").child(isbn).setValue(map);
+                        Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
+                        Intent gb = new Intent(getApplicationContext(), AdminHome.class);
                         startActivity(gb);
 
-
                     }
-                }else {
 
-
-                        databaseReference.child("BookDB").child(Uid).setValue(map);
-                        Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
-                    Intent gb = new Intent(getApplicationContext(), AdminHome.class);
-                    startActivity(gb);
 
                 }
 
 
-            }
         });
 
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +106,7 @@ public class Addbooks extends AppCompatActivity {
             public void onClick(View v) {
                 titles.setText(null);
                 authors.setText(null);
-                bookid.setText(null);
+                ISBN.setText(null);
                 Imglnk.setText(null);
 
             }

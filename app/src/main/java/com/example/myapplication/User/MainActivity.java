@@ -68,7 +68,7 @@ public class MainActivity extends Login {
         mtoggle.syncState();
         fAuth= FirebaseAuth.getInstance();
         options = new FirebaseRecyclerOptions.Builder<Bookdeets>()
-                .setQuery(reference.child("TopbooksDB"), Bookdeets.class).build();
+                .setQuery(reference.child("BookDB"), Bookdeets.class).build();
 
         adapter = new FirebaseRecyclerAdapter<Bookdeets, Bkhomeholder>(options) {
             @Override

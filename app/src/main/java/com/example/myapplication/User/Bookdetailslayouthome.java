@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class Bookdetailslayouthome extends SearchPage {
 
 
-    TextView title, author, bookid,Category,Link;
+    TextView title, author, ISBN,Category,Link;
     ImageView image;
     View header;
     NavigationView navbar1;
@@ -57,7 +57,7 @@ public class Bookdetailslayouthome extends SearchPage {
         image = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.bkname);
         Category = (TextView) findViewById(R.id.category);
-        bookid = (TextView) findViewById(R.id.bkid);
+        ISBN = (TextView) findViewById(R.id.bkid);
         Link=(TextView)findViewById(R.id.Link);
         author = (TextView) findViewById(R.id.aname);
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -103,7 +103,7 @@ if(routing.equals("searchpage")) {
     category = mcategory;
 
     final String misbn = getIntent().getStringExtra("key");
-    bookid.setText("ISBN "+misbn);
+    ISBN.setText("ISBN "+misbn);
     isbn = misbn;
     final String mimgs = getIntent().getStringExtra("Image");
     Picasso.get().load(mimgs).into(image);
@@ -136,7 +136,7 @@ else if(routing.equals("Mainpage")) {
                 Picasso.get().load(mimgs).into(image);
                 bkimage = mimgs;
                 String misbn = dataSnapshot.child("ISBN").getValue().toString();
-                bookid.setText("ISBN: "+misbn);
+                ISBN.setText("ISBN: "+misbn);
                 isbn = misbn;
                 String mcategory = dataSnapshot.child("Category").getValue().toString();
                 Category.setText(mcategory);

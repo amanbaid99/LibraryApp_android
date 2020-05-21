@@ -55,7 +55,7 @@ public class Profile extends AppCompatActivity {
 
         if (userID != null) {
 
-            reff.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            reff.child(userID).child("userinfo").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String mname = dataSnapshot.child("fullName").getValue().toString();
