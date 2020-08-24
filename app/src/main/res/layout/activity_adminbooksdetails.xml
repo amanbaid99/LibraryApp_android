@@ -90,13 +90,13 @@ android:orientation="vertical">
             android:id="@+id/deltebtn"
             />
 
-            <Button android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Add to Main"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="12dp"
-                android:id="@+id/AddtoMain"
-                />
+<!--            <Button android:layout_height="wrap_content"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:text="Add to Main"-->
+<!--                android:layout_marginStart="18dp"-->
+<!--                android:layout_marginTop="12dp"-->
+<!--                android:id="@+id/AddtoMain"-->
+<!--                />-->
 
 
 

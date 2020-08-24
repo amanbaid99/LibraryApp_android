@@ -27,10 +27,10 @@ public class AdminSearchAdapter extends RecyclerView.Adapter<AdminSearchAdapter.
     ArrayList<String> CategoryList;
     LinearLayout booklayoutt;
     ArrayList<String>IsbnList;
-    FirebaseDatabase db;
+//    FirebaseDatabase db;
 
     DatabaseReference referencee;
-    public  String key;
+//    public  String key;
 
     class EditViewHolder extends RecyclerView.ViewHolder{
         ImageView bookimages;

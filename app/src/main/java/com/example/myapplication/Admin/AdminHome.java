@@ -127,10 +127,7 @@ public class AdminHome extends AppCompatActivity {
                     startActivity(h);
                 }
 
-                else if(id== R.id.tempdb) {
-                    Intent tdb = new Intent(getApplicationContext(), TempBooksLayout.class);
-                    startActivity(tdb);
-                }
+
                 else if(id== R.id.addbooksadmin) {
                     Intent ad = new Intent(getApplicationContext(), Addbooks.class);
                     ad.putExtra("admid","Admin");

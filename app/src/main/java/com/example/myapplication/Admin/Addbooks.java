@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.User.Bookdeets;
@@ -62,44 +59,24 @@ public class Addbooks extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String Title = titles.getText().toString().trim();
+                String Author = authors.getText().toString().trim();
+                String isbn = ISBN.getText().toString().trim();
+                String Img = Imglnk.getText().toString().trim();
 
-
-                    String Title = titles.getText().toString().trim();
-                    String Author = authors.getText().toString().trim();
-                    String isbn = ISBN.getText().toString().trim();
-                    String Img = Imglnk.getText().toString().trim();
-
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("bookname", Title);
-                    map.put("author", Author);
-                    map.put("ISBN", isbn);
-                    map.put("image", Img);
-                    map.put("Category", Category);
-                    if (uidcheck != null) {
-
-                        if (uidcheck.equals("User")) {
-                            databaseReference.child("TempBookDB").child(isbn).setValue(map);
-                            Toast.makeText(getApplicationContext(), "Book Added succesfully to temp DataBase", Toast.LENGTH_SHORT).show();
-                            Intent gb = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(gb);
-
-
-                        }
-                    } else {
-
-
-                        databaseReference.child("BookDB").child(isbn).setValue(map);
-                        Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
-                        Intent gb = new Intent(getApplicationContext(), AdminHome.class);
-                        startActivity(gb);
-
-                    }
-
-
-                }
-
-
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("bookname", Title);
+                map.put("author", Author);
+                map.put("ISBN", isbn);
+                map.put("image", Img);
+                map.put("Category", Category);
+                databaseReference.child("BookDB").child(isbn).setValue(map);
+                Toast.makeText(getApplicationContext(), "Book Added succesfully", Toast.LENGTH_SHORT).show();
+                Intent gb = new Intent(getApplicationContext(), AdminHome.class);
+                startActivity(gb);
+            }
         });
+//
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override

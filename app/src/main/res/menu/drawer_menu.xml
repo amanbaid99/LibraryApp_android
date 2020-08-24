@@ -12,13 +12,13 @@
 
             />
 
-        <item
-            android:id="@+id/browse"
-            android:checkable="false"
-            android:enabled="true"
-            android:icon="@drawable/category"
-            android:title="Browse"
-            />
+<!--        <item-->
+<!--            android:id="@+id/browse"-->
+<!--            android:checkable="false"-->
+<!--            android:enabled="true"-->
+<!--            android:icon="@drawable/category"-->
+<!--            android:title="Browse"-->
+<!--            />-->
         <item
             android:id="@+id/search"
             android:checkable="false"
@@ -27,23 +27,23 @@
             android:title="SearchBooks"
             />
 
-        <item
-            android:id="@+id/addbkbtn"
-            android:checkable="false"
-            android:enabled="true"
-            android:icon="@drawable/addbutton"
-            android:title="Add Books"
-            />
+<!--        <item-->
+<!--            android:id="@+id/addbkbtn"-->
+<!--            android:checkable="false"-->
+<!--            android:enabled="true"-->
+<!--            android:icon="@drawable/addbutton"-->
+<!--            android:title="Add Books"-->
+<!--            />-->
 
 </group>
 
-        <item
-            android:id="@+id/Profile"
-            android:checkable="false"
-            android:enabled="true"
-            android:icon="@drawable/admin"
-            android:title="Profile"
-            />
+<!--        <item-->
+<!--            android:id="@+id/Profile"-->
+<!--            android:checkable="false"-->
+<!--            android:enabled="true"-->
+<!--            android:icon="@drawable/admin"-->
+<!--            android:title="Profile"-->
+<!--            />-->
 
 
         <item

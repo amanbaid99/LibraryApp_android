@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Admin.Addbooks;
 import com.example.myapplication.R;
 import com.example.myapplication.signin.authentication.Login;
@@ -120,18 +119,12 @@ public class MainActivity extends Login {
 
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
-                else if(id== R.id.browse) {
-                    Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
-                }
                 else if(id== R.id.search) {
 
                     Intent search = new Intent(getApplicationContext(), SearchPage.class);
                     startActivity(search);
                 }
-                else if(id== R.id.Profile) {
-                    Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
-                    startActivity(sendtopro);
-                }
+
                 else if(id== R.id.addbkbtn) {
 
                     Intent adbk = new Intent(getApplicationContext(), Addbooks.class);

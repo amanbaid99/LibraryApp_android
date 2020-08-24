@@ -182,19 +182,12 @@ public class SearchPage extends AppCompatActivity {
                     startActivity(search);
 
                 }
-                else if(id== R.id.browse) {
-                    Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
-                }
+
                 else if(id== R.id.search) {
 
                     drawerLayout.closeDrawer(GravityCompat.START);
 
 
-                }
-                else if(id== R.id.Profile) {
-                    Intent sendtopro=new Intent(getApplicationContext(), Profile.class);
-//                    sendtopro.putExtra("Ukey",UserId);
-                    startActivity(sendtopro);
                 }
                 else if(id== R.id.addbkbtn) {
 

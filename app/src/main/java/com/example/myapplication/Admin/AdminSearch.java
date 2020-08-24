@@ -165,11 +165,7 @@ public class AdminSearch extends AppCompatActivity {
                     Intent sendtopro=new Intent(getApplicationContext(), Addbooks.class);
                     startActivity(sendtopro);
                 }
-                else if(id== R.id.tempdb) {
 
-                    Intent adbk = new Intent(getApplicationContext(), TempBooksLayout.class);
-                    startActivity(adbk);
-                }
                 else if(id== R.id.Logoutbtn) {
                     fAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(), Login.class);

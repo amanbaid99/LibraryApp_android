@@ -33,7 +33,7 @@ import io.grpc.InternalWithLogId;
 public class AdminBookdetails extends AdminSearch {
     EditText titles, authors, Imglnk,category,isbn;
     Bookdeets bookdeets;
-    Button update, delete,addtomain;
+    Button update, delete;
     ImageView imageView;
     String id="tt";
 
@@ -50,7 +50,6 @@ public class AdminBookdetails extends AdminSearch {
         Imglnk = (EditText) findViewById(R.id.imglinks);
         update = (Button) findViewById(R.id.updatebtn);
         delete = (Button) findViewById(R.id.deltebtn);
-        addtomain = (Button) findViewById(R.id.AddtoMain);
         bookdeets = new Bookdeets();
         id = getIntent().getStringExtra("id");
         String key = getIntent().getStringExtra("key");
@@ -121,53 +120,6 @@ if(id!=null) {
 }
 
 
-        addtomain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String Title = titles.getText().toString().trim();
-                String Author = authors.getText().toString().trim();
-                final String Isbn = isbn.getText().toString().trim();
-                String Img = Imglnk.getText().toString().trim();
-                String ccategory = category.getText().toString().trim();
-
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("bookname", Title);
-                map.put("author", Author);
-                map.put("ISBN", Isbn);
-                map.put("image", Img);
-                map.put("Category",ccategory);
-                if (databaseReference.child("BookDB").child(Isbn).child("id").equals(Isbn)) {
-                    Toast.makeText(AdminBookdetails.this, "Book already exits", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    databaseReference.child("BookDB").child(Isbn).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                databaseReference.child("TempBookDB").child(Isbn).setValue(null);
-                                Toast.makeText(AdminBookdetails.this, "Added to Main  Database Successfully", Toast.LENGTH_SHORT).show();
-
-
-                            } else {
-                                Toast.makeText(AdminBookdetails.this, "Task failed try again", Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                        }
-                    });
-
-
-                    if (TextUtils.isEmpty(Title) || TextUtils.isEmpty(Author)) {
-                        titles.setError("Field cant be empty");
-                    }
-                }
-            }
-
-
-        });
-
-
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -208,7 +160,7 @@ if(id!=null) {
                     databaseReference.child("BooksDB").child(Isbn).setValue(null);
                     databaseReference.child("TempBookDB").child(Isbn).setValue(null);
                     Toast.makeText(getApplicationContext(), "Book deleted succesfully", Toast.LENGTH_SHORT).show();
-                    Intent gbck=new Intent(getApplicationContext(),TempBooksLayout.class);
+                    Intent gbck=new Intent(getApplicationContext(),AdminBookdetails.class);
                     startActivity(gbck);
                 }
             });

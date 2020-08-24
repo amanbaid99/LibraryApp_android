@@ -6,15 +6,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.myapplication.R;
 import com.example.myapplication.signin.authentication.Login;
 import com.google.android.material.navigation.NavigationView;
@@ -77,15 +74,8 @@ public class Profile extends AppCompatActivity {
 
                 int id = item.getItemId();
                 drawerLayout.closeDrawers();
-                if (id == R.id.Profile) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
-                else if (id == R.id.browse) {
-                    Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_LONG).show();
-//                    Intent h = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(h);
-                }
-                else if (id == R.id.search) {
+
+                if (id == R.id.search) {
                     Intent search = new Intent(getApplicationContext(), SearchPage.class);
                     startActivity(search);
                 }

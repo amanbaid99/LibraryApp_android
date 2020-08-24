@@ -20,12 +20,12 @@
         android:enabled="true"
         android:icon="@drawable/addbutton"
         android:title="Add New Books" />
-    <item
-        android:id="@+id/tempdb"
-        android:checkable="false"
-        android:enabled="true"
-        android:icon="@drawable/database"
-        android:title="View Temp Database" />
+<!--    <item-->
+<!--        android:id="@+id/tempdb"-->
+<!--        android:checkable="false"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/database"-->
+<!--        android:title="View Temp Database" />-->
 
     <item
         android:id="@+id/Logoutbtn"
